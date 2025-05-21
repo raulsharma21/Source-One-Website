@@ -1,0 +1,111 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%; /* #FFFFFF */
+    --foreground: 207 96% 14%; /* #023047 (Dark Navy - for text) */
+
+    --card: 0 0% 100%;
+    --card-foreground: 207 96% 14%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 207 96% 14%;
+
+    --primary: 209 100% 28%; /* #004A8F (Main Blue) */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF */
+
+    --secondary: 46 100% 50%; /* #FFC300 (Bright Yellow/Gold - for CTAs) */
+    --secondary-foreground: 207 96% 14%; /* #023047 (Dark Navy for text on yellow secondary) */
+    
+    --muted: 200 50% 96%; /* #F2F7F9 (Very light cool gray) */
+    --muted-foreground: 207 30% 40%; /* #516D7C (Softer navy/gray for text on muted) */
+
+    --accent: 210 100% 12%; /* #001D3D (Dark Blue - Accent for section backgrounds) */
+    --accent-foreground: 0 0% 98%; /* #FAFAFA (Near white for text on dark blue accent) */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 200 30% 88%; /* #D8E1E5 (Light cool gray) */
+    --input: 200 30% 88%;
+    --ring: 209 100% 28%; /* #004A8F (Main Blue for focus rings) */
+
+    --radius: 0.5rem;
+
+    /* Chart colors */
+    --chart-1: 209 100% 48%; /* Lighter Primary Blue */
+    --chart-2: 46 100% 60%;  /* Lighter Secondary Yellow */
+    --chart-3: 209 100% 38%; /* Mid Primary Blue */
+    --chart-4: 209 100% 68%; /* Even Lighter Primary Blue */
+    --chart-5: 46 100% 70%;  /* Even Lighter Secondary Yellow */
+
+    /* Sidebar specific colors - aligned with the new theme */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+  }
+
+  .dark {
+    --background: 207 96% 14%; /* #023047 (Dark Navy - Main Background) */
+    --foreground: 200 60% 95%; /* #EBF5FA (Off-white/light blue text) */
+
+    --card: 207 80% 18%; /* #0A3C57 (Slightly lighter navy for cards) */
+    --card-foreground: 200 60% 95%;
+
+    --popover: 207 80% 18%;
+    --popover-foreground: 200 60% 95%;
+
+    --primary: 209 70% 55%; /* #5B9DDE (Lighter Main Blue for dark mode) */
+    --primary-foreground: 210 100% 10%; /* #002244 (Darker blue for text on light primary) */
+
+    --secondary: 46 90% 55%; /* #FFDB4D (Bright Yellow/Gold - slightly lighter for dark mode actions) */
+    --secondary-foreground: 207 96% 14%; /* #023047 (Dark Navy for text on yellow secondary in dark mode) */
+
+    --muted: 207 70% 22%; /* #114B6F (Darker muted navy) */
+    --muted-foreground: 200 40% 70%; /* #9CB9CC (Lighter muted text) */
+
+    --accent: 210 80% 35%; /* #1F68B1 (Lighter Dark Blue for dark mode accent sections) */
+    --accent-foreground: 200 60% 95%; /* #EBF5FA (Off-white/light blue text on dark blue accent) */
+    
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 207 60% 25%; /* #1A5C84 (Darker navy border) */
+    --input: 207 60% 25%;
+    --ring: 209 70% 55%; /* #5B9DDE (Lighter Main Blue for rings in dark mode) */
+
+    /* Chart colors for dark mode */
+    --chart-1: 209 70% 65%;
+    --chart-2: 46 90% 65%;
+    --chart-3: 209 70% 60%;
+    --chart-4: 209 70% 75%;
+    --chart-5: 46 90% 70%;
+    
+    /* Sidebar dark theme */
+    --sidebar-background: var(--background);
+    --sidebar-foreground: var(--foreground);
+    --sidebar-primary: var(--primary);
+    --sidebar-primary-foreground: var(--primary-foreground);
+    --sidebar-accent: var(--accent);
+    --sidebar-accent-foreground: var(--accent-foreground);
+    --sidebar-border: var(--border);
+    --sidebar-ring: var(--ring);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
