@@ -103,20 +103,25 @@ const whatWeDoItems = [
     title: "Freight & Customs",
     description: "Seamless logistics and customs clearance to get your goods where they need to be.",
   },
+  {
+    icon: Factory,
+    title: "Payments",
+    description: "We ",
+  },
 ];
 
 const whySourceOneItems = [
-  { icon: Award, text: "NEVER lost a customer" },
-  { icon: Globe, text: "U.S. + China offices" },
-  { icon: ListChecks, text: "Hundreds of vetted factories" },
+  { icon: Globe, text: "U.S. & Asia offices" },
+  { icon: ListChecks, text: "500+ vetted factories" },
   { icon: Eye, text: "End-to-end oversight" },
+  { icon: Globe, text: "Lifelong customers" }
 ];
 
 const ctaSteps = [
   { icon: Phone, title: "1. Initial Call", description: "Discuss your project needs with our experts." },
-  { icon: ClipboardList, title: "2. Define Specs", description: "We'll help you detail product specifications." },
-  { icon: PackageSearch, title: "3. Get Samples", description: "Review and approve samples before production." },
-  { icon: FileCheck2, title: "4. First PO", description: "Place your first production order with confidence." },
+  { icon: ClipboardList, title: "2. Assess Synergies", description: "We're a boutique firm where fit and relationships matter." },
+  { icon: PackageSearch, title: "3. Meet in Person", description: "Review and approve samples before production." },
+  { icon: FileCheck2, title: "4. Product Details", description: "Place your first production order with confidence." },
 ];
 
 export default function Home() {
@@ -163,17 +168,17 @@ export default function Home() {
           <span className="text-foreground">{displayPeriod}</span>
         </h1>
         <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
-          Reliable, Low-Cost Global Sourcing, Just For You
+          Overseas, Sourcing, Hometown-Service
         </p>
         <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
           <Button asChild size="lg" className="transition-transform hover:scale-105" variant="secondary">
             <Link href="/contact">
-              Get a Free Quote <ArrowRight className="ml-2 h-5 w-5" />
+              Tariffs and Exchange Rates <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
           <Button asChild variant="default" size="lg" className="transition-transform hover:scale-105">
-            <Link href="/services">
-              Explore Our Services
+            <Link href="/about">
+              Learn About Us
             </Link>
           </Button>
         </div>
@@ -284,10 +289,15 @@ export default function Home() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-12">
+          <div className="text-center mt-12  gap-4 flex flex-col sm:flex-row justify-center">
             <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105">
               <Link href="/contact">
-                Talk to an Expert <ArrowRight className="ml-2 h-5 w-5" />
+                Leave Your Number <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105">
+              <Link href="/contact">
+                Contact Us at 1-888-USA-CHINA<ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </div>
@@ -325,13 +335,13 @@ export default function Home() {
 
       {/* Call to Action Section */}
       <section className="py-12 md:py-20 text-center bg-accent text-accent-foreground rounded-lg">
-        <h2 className="text-3xl font-bold mb-6">Ready to Streamline Your Imports?</h2>
+        <h2 className="text-3xl font-bold mb-6">Ready to Simplify Your Imports & Cut Landed Costs?</h2>
         <p className="max-w-xl mx-auto text-lg mb-8">
-          Let Source One be your guide in the world of international trade. Contact us today for a consultation.
+        Our Duluth & Ningbo teams handle factory audits, freight, and customs, so you see the exact landed cost before you order.
         </p>
         <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105" >
           <Link href="/contact">
-            Request a Quote
+            Reach Out To Us <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </Button>
       </section>

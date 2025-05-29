@@ -13,11 +13,11 @@ export const metadata: Metadata = {
 };
 
 const readyForRetailBullets = [
-  { icon: Settings, text: "Tooling & Samples" },
-  { icon: Package, text: "Retail Packaging" },
-  { icon: UserCheck, text: "100% Pre-Ship QC" },
-  { icon: FileText, text: "Importer-of-Record" },
-  { icon: Truck, text: "Freight Optimization" },
+  { icon: Settings, text: "Plastics" },
+  { icon: Package, text: "Glass and Ceramics" },
+  { icon: UserCheck, text: "Carbon Fiber" },
+  { icon: FileText, text: "Aluminium" },
+  { icon: Truck, text: "Steel" },
 ];
 
 const oemComponentsBullets = [
@@ -37,7 +37,7 @@ const sixStepProcess = [
 ];
 
 const successMetrics = [
-    { value: "32%", label: "Avg. Cost Savings", icon: DollarSign },
+    { value: "1 Million+", label: "Units Imported Annually", icon: DollarSign },
     { value: "98%", label: "On-Time Delivery", icon: Truck },
     { value: "100%", label: "Containers QC-Passed", icon: CheckCircle },
 ];
@@ -62,7 +62,7 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center">
-              <Package className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Ready for Retail
+              <Package className="mr-3 h-8 w-8 text-[#5DA9E9]" /> An End To End Solution For Your Retail Ready Goods
             </h2>
             <p className="text-muted-foreground mb-6 text-lg">
               For private-label and direct-to-consumer (DTC) brands, getting your product shelf-ready is paramount. Source One manages the entire process, ensuring your goods arrive finished, packaged, and compliant, ready for your customers.
@@ -89,37 +89,6 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* OEM / Components Section */}
-      <section className="py-12 bg-muted/50 rounded-lg">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-           <div className="rounded-lg overflow-hidden shadow-xl md:order-last">
-             <Image
-              src="https://placehold.co/600x400.png"
-              alt="OEM components manufacturing"
-              width={600}
-              height={400}
-              className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
-              data-ai-hint="manufacturing components"
-            />
-          </div>
-          <div>
-            <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center">
-              <Settings className="mr-3 h-8 w-8 text-[#5DA9E9]" /> OEM / Components
-            </h2>
-            <p className="text-muted-foreground mb-6 text-lg">
-              Manufacturers looking to cut Cost of Goods Sold (COGS) or accelerate new-product launches rely on our expertise in sourcing high-quality components and sub-assemblies. We act as your trusted partner on the ground.
-            </p>
-            <ul className="space-y-3">
-              {oemComponentsBullets.map((item) => (
-                <li key={item.text} className="flex items-center text-muted-foreground text-lg">
-                  <item.icon className="h-6 w-6 mr-3 text-[#5DA9E9] shrink-0" />
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
 
       {/* The 6-Step Process Section */}
       <section className="py-12">

@@ -23,10 +23,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="transition-opacity hover:opacity-80">
-          {/* Ensure 'logo.png' is placed in the 'public' directory at the root of your project. */}
-          {/* For example: your-project/public/logo.png */}
           <Image
-            src="/logo.png" // This path is relative to the 'public' directory
+            src="/sourceonelogo.png" // This path is relative to the 'public' directory
             alt="Source One Enterprises Logo"
             width={160}
             height={100}
@@ -62,7 +60,7 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                    <Link href="/" onClick={() => setMobileMenuOpen(false)} className="transition-opacity hover:opacity-80">
                       <Image
-                        src="/logo.png" // Also relative to the 'public' directory
+                        src="/sourceonelogo.png" // Also relative to the 'public' directory
                         alt="Source One Enterprises Logo"
                         width={160}
                         height={100}

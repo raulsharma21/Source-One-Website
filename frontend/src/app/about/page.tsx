@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const values = [
-  { name: "Integrity", icon: HeartHandshake, description: "Operating with unwavering honesty and ethical principles in all our dealings." },
-  { name: "Long-Term Partnerships", icon: Users, description: "Building lasting relationships based on trust, transparency, and mutual success." },
-  { name: "Continuous Improvement", icon: TrendingUp, description: "Constantly seeking better ways to serve our clients and optimize processes." },
-  { name: "Safety & Quality", icon: ShieldCheck, description: "Prioritizing the safety of people and the quality of products above all." },
+  { name: "Family-Focused Parnership", icon: HeartHandshake, description: "Operating with unwavering honesty and ethical principles in all our dealings." },
+  { name: "Integrity and Transparency", icon: Users, description: "Building lasting relationships based on trust, transparency, and mutual success." },
+  { name: "Proven Quality and Compliance", icon: ShieldCheck, description: "Constantly seeking better ways to serve our clients and optimize processes." },
+  { name: "Relentless Cost Optimization", icon: TrendingUp, description: "Prioritizing the safety of people and the quality of products above all." },
 ];
 
 const edgeItems = [
@@ -83,7 +83,7 @@ export default function AboutPage() {
             <Target className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Mission
           </h2>
           <p className="text-2xl md:text-3xl font-medium text-primary mb-12 max-w-3xl mx-auto">
-            “Increase profitability and peace of mind through ethical global sourcing.”
+            “”
           </p>
           <h3 className="text-2xl font-semibold text-foreground mb-10">Our Core Values</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -100,20 +100,6 @@ export default function AboutPage() {
         </div>
       </section>
       
-      {/* Our Edge Section */}
-      <section className="py-12">
-        <h2 className="text-3xl font-bold text-center text-foreground mb-12">Our Edge: Why Choose Source One?</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {edgeItems.map((item) => (
-            <Card key={item.text} className="p-6 text-center shadow-md hover:shadow-lg transition-shadow duration-300">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary mb-4">
-                <item.icon className="h-8 w-8 text-[#5DA9E9]" />
-                </div>
-              <p className="text-lg font-medium text-foreground">{item.text}</p>
-            </Card>
-          ))}
-        </div>
-      </section>
 
       {/* Global Team Section */}
       <section className="py-12 bg-muted/50 rounded-lg">

@@ -42,21 +42,21 @@ export default function ContactPage() {
                 <MapPin className="h-6 w-6 text-[#5DA9E9] mt-1 shrink-0" />
                 <div>
                   <h3 className="font-semibold text-foreground">Address:</h3>
-                  <p className="text-muted-foreground">123 Import Drive, Duluth, MN 55802, USA</p>
+                  <p className="text-muted-foreground">314 West Superior Street, Suite 502, Duluth, MN - 55802</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Phone className="h-6 w-6 text-[#5DA9E9] mt-1 shrink-0" />
                 <div>
                   <h3 className="font-semibold text-foreground">Phone:</h3>
-                  <p className="text-muted-foreground">(218) 555-0199</p>
+                  <p className="text-muted-foreground">(218) 740-3072</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
                 <Mail className="h-6 w-6 text-[#5DA9E9] mt-1 shrink-0" />
                 <div>
                   <h3 className="font-semibold text-foreground">Email:</h3>
-                  <p className="text-muted-foreground">info@sourceone.com</p>
+                  <p className="text-muted-foreground">info@sourceoneus.com</p>
                 </div>
               </div>
             </CardContent>
