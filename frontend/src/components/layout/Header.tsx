@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from 'next/link';
@@ -21,14 +20,14 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="transition-opacity hover:opacity-80">
           <Image
             src="/sourceonelogo.png" // This path is relative to the 'public' directory
             alt="Source One Enterprises Logo"
-            width={160}
-            height={100}
-            className="h-10 w-auto"
+            width={200}
+            height={125}
+            className="h-14 w-auto"
             priority
           />
         </Link>
@@ -62,9 +61,9 @@ export default function Header() {
                       <Image
                         src="/sourceonelogo.png" // Also relative to the 'public' directory
                         alt="Source One Enterprises Logo"
-                        width={160}
-                        height={100}
-                        className="h-10 w-auto"
+                        width={200}
+                        height={125}
+                        className="h-12 w-auto"
                         priority
                       />
                     </Link>

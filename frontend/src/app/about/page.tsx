@@ -25,16 +25,17 @@ const edgeItems = [
 ];
 
 const teamMembers = [
-  { city: "Duluth HQ", name: "Alice Johnson", role: "CEO, 20 yrs leadership", avatar: "AJ", image: "https://placehold.co/80x80.png", hint: "professional woman" },
-  { city: "Duluth HQ", name: "Bob Williams", role: "Operations Head, 18 yrs logistics", avatar: "BW", image: "https://placehold.co/80x80.png", hint: "professional man" },
-  { city: "Ningbo HQ", name: "Chen Lin", role: "Quality Engineer, 15 yrs hard-goods QC", avatar: "CL", image: "https://placehold.co/80x80.png", hint: "asian engineer" },
-  { city: "Ningbo HQ", name: "Zhang Wei", role: "Factory Liaison, 12 yrs sourcing", avatar: "ZW", image: "https://placehold.co/80x80.png", hint: "chinese professional" },
+  { city: "Duluth HQ", name: "Greg Oas", role: "Founder, 30 years", avatar: "BW", image: "/headshots/Greg Oas.png", hint: "professional man" },
+  { city: "Duluth HQ", name: "Greg Poul", role: "President, 25+ years working with Asia", avatar: "GP", image: "/headshots/GregPoul.png", hint: "professional woman" },
+  { city: "Duluth HQ", name: "Erikka Bergstem", role: "Director of Operations, 20+ years", avatar: "BW", image: "/headshots/Erikka.jpeg", hint: "professional man" },
+  { city: "Ningbo HQ", name: "Michael", role: "Director of Asian Ops, 28 years", avatar: "CL", image: "/headshots/Michael.png", hint: "asian engineer" },
+  { city: "Ningbo HQ", name: "Ning", role: "China Sourcing Specialist, 28 years", avatar: "ZW", image: "/headshots/Ning.jpeg", hint: "chinese professional" },
 ];
 
 const timelineEvents = [
-    { year: "2003", event: "Source One Launched", description: "Founded in Duluth with a vision to simplify global sourcing.", icon: Rocket },
-    { year: "2010", event: "OEM Expansion & Ningbo Office", description: "Expanded services for OEM components and opened our China headquarters.", icon: Factory },
-    { year: "2025", event: "Container Optimization Tool Release", description: "Launched our innovative tool to maximize shipping efficiency.", icon: BarChart3 },
+    { year: "1995", event: "Source One Founded", description: "Founded in Duluth with a vision to simplify global sourcing.", icon: Rocket },
+    { year: "1997", event: "Opened Asian Office in Ningbo China", description: "Expanded services for OEM components and opened our China headquarters.", icon: Factory },
+    { year: "2025", event: "Celebrated 30 Years of Business", description: "30 years of helping customers lower their product procurement costs.", icon: BarChart3 },
 ];
 
 export default function AboutPage() {
@@ -54,7 +55,7 @@ export default function AboutPage() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="rounded-lg overflow-hidden shadow-xl">
             <Image
-              src="https://placehold.co/600x450.png"
+              src="/SOimage2.jpeg"
               alt="Symbolic image of Source One's history or Duluth office"
               width={600}
               height={450}
@@ -67,10 +68,10 @@ export default function AboutPage() {
               <Building2 className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Story
             </h2>
             <p className="text-muted-foreground mb-4 text-lg">
-              Founded in Duluth, Minnesota, Source One began with a straightforward mission: to make global sourcing accessible and reliable for businesses of all sizes. Our early growth was fueled by a dedication to understanding client needs and navigating the complexities of international trade with transparency.
+              After selling his insurance business and teaching at a Beijing college for two years, Greg Oas and his former students had a dream to import and sell chunks of the Great Wall of China in the US. When that dream proved impossible, they decided selling rabbit fur hats, gloves, umbrellas, and tote bags to major US retailers would be much more achievable and Source One was born.
             </p>
             <p className="text-muted-foreground text-lg">
-              A pivotal moment in our journey was the launch of our Ningbo office, establishing a crucial on-the-ground presence in China. This expansion enhanced our ability to vet factories, ensure quality, and build strong supplier relationships. Our guiding philosophy has always been one of partnership—working closely with clients as an extension of their team to achieve shared success.
+              Since that humble beginning over 30 years ago, Source One has built an Asian network of reliable factory partners by growing relationships with unparalleled business conduct and integrity. Today, Source One Enterprises has established itself as a major supplier of OEM products for the hardware, houseware, sporting goods, traffic control, and building materials industries. Most of our customers have been with us for decades; a testament to how committed we are to their success. We encourage you to join us.
             </p>
           </div>
         </div>
@@ -83,7 +84,7 @@ export default function AboutPage() {
             <Target className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Mission
           </h2>
           <p className="text-2xl md:text-3xl font-medium text-primary mb-12 max-w-3xl mx-auto">
-            “”
+            “At Source One, our mission is to simplify global sourcing by building lasting, genuine partnerships with factories and clients alike.”
           </p>
           <h3 className="text-2xl font-semibold text-foreground mb-10">Our Core Values</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -112,20 +113,36 @@ export default function AboutPage() {
             <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
               <MapPin className="mr-2 h-7 w-7 text-[#5DA9E9]" /> Duluth HQ, USA
             </h3>
-            <div className="rounded-lg overflow-hidden shadow-md mb-6">
+            {/* <div className="rounded-lg overflow-hidden shadow-md mb-6">
               <Image src="https://placehold.co/500x300.png" alt="Map of Duluth HQ" width={500} height={300} className="w-full h-auto object-cover" data-ai-hint="city map usa" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              {teamMembers.filter(m => m.city === "Duluth HQ").map(member => (
-                <Card key={member.name} className="text-center p-4 shadow-sm">
-                  <Avatar className="w-20 h-20 mx-auto mb-3 border-2 border-primary">
-                    <AvatarImage src={member.image} alt={`${member.name}`} data-ai-hint={member.hint} />
-                    <AvatarFallback className="text-xl bg-muted">{member.avatar}</AvatarFallback>
-                  </Avatar>
-                  <p className="font-semibold text-foreground text-sm">{member.name}</p>
-                  <p className="text-xs text-muted-foreground">{member.role}</p>
-                </Card>
-              ))}
+            </div> */}
+            <div className="space-y-4">
+              {/* First row - 2 members */}
+              <div className="grid grid-cols-2 gap-4">
+                {teamMembers.filter(m => m.city === "Duluth HQ").slice(0, 2).map(member => (
+                  <Card key={member.name} className="text-center p-4 shadow-sm">
+                    <Avatar className="w-20 h-20 mx-auto mb-3 border-2 border-primary">
+                      <AvatarImage src={member.image} alt={`${member.name}`} data-ai-hint={member.hint} />
+                      <AvatarFallback className="text-xl bg-muted">{member.avatar}</AvatarFallback>
+                    </Avatar>
+                    <p className="font-semibold text-foreground text-sm">{member.name}</p>
+                    <p className="text-xs text-muted-foreground">{member.role}</p>
+                  </Card>
+                ))}
+              </div>
+              {/* Second row - 1 member centered */}
+              <div className="flex justify-center">
+                {teamMembers.filter(m => m.city === "Duluth HQ").slice(2, 3).map(member => (
+                  <Card key={member.name} className="text-center p-4 shadow-sm w-[calc(50%-0.5rem)]">
+                    <Avatar className="w-20 h-20 mx-auto mb-3 border-2 border-primary">
+                      <AvatarImage src={member.image} alt={`${member.name}`} data-ai-hint={member.hint} />
+                      <AvatarFallback className="text-xl bg-muted">{member.avatar}</AvatarFallback>
+                    </Avatar>
+                    <p className="font-semibold text-foreground text-sm">{member.name}</p>
+                    <p className="text-xs text-muted-foreground">{member.role}</p>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
           {/* Ningbo HQ */}
@@ -133,9 +150,9 @@ export default function AboutPage() {
             <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
               <MapPin className="mr-2 h-7 w-7 text-[#5DA9E9]" /> Ningbo HQ, China
             </h3>
-             <div className="rounded-lg overflow-hidden shadow-md mb-6">
+            {/* <div className="rounded-lg overflow-hidden shadow-md mb-6">
               <Image src="https://placehold.co/500x300.png" alt="Map of Ningbo HQ" width={500} height={300} className="w-full h-auto object-cover" data-ai-hint="city map china"/>
-            </div>
+            </div> */}
             <div className="grid grid-cols-2 gap-4">
               {teamMembers.filter(m => m.city === "Ningbo HQ").map(member => (
                 <Card key={member.name} className="text-center p-4 shadow-sm">
@@ -157,7 +174,7 @@ export default function AboutPage() {
          <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="rounded-lg overflow-hidden shadow-xl">
             <Image
-              src="https://placehold.co/600x400.png"
+              src="/SOimage4.jpeg"
               alt="Symbolic image of sustainability or ethical practices"
               width={600}
               height={400}

@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     
     # Configure CORS - replace with your frontend URL in production
-    CORS(app, origins=["http://localhost:3001", "https://your-firebase-app.web.app"])
+    CORS(app, origins=["https://your-firebase-app.web.app", "http://localhost:9002", "http://192.168.1.64:9002"])
     
     # Register blueprints
     app.register_blueprint(contact_bp, url_prefix='/api')

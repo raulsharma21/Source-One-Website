@@ -37,8 +37,8 @@ const sixStepProcess = [
 ];
 
 const successMetrics = [
-    { value: "1 Million+", label: "Units Imported Annually", icon: DollarSign },
-    { value: "98%", label: "On-Time Delivery", icon: Truck },
+    { value: "1.5 Million+", label: "Units Imported in 2024", icon: DollarSign },
+    { value: "500+", label: "Audited Factories", icon: Truck },
     { value: "100%", label: "Containers QC-Passed", icon: CheckCircle },
 ];
 
@@ -78,7 +78,7 @@ export default function ServicesPage() {
           </div>
           <div className="rounded-lg overflow-hidden shadow-xl">
              <Image
-              src="https://placehold.co/600x400.png"
+              src="/SOimage3.jpeg"
               alt="Retail ready products on shelf"
               width={600}
               height={400}

@@ -20,6 +20,7 @@ def test_contact_form():
         data = {
             "name": "Test User",
             "email": "test@example.com",
+            "phone": "+1234567890",
             "subject": "Test Message",
             "message": "This is a test message from the API test script."
         }

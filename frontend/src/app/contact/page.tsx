@@ -63,12 +63,10 @@ export default function ContactPage() {
           </Card>
           
           <Card className="shadow-lg overflow-hidden">
-             <CardHeader>
-              <CardTitle className="text-xl font-semibold">Find Us Here</CardTitle>
-            </CardHeader>
+             
             <CardContent className="p-0">
                <Image
-                src="https://placehold.co/600x400.png"
+                src="/contact2.jpg"
                 alt="Map showing the location of Source One's Duluth office"
                 width={600}
                 height={400}

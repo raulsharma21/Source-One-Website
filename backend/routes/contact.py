@@ -22,13 +22,14 @@ def contact_form():
         data = request.get_json()
         
         # Validate required fields
-        required_fields = ['name', 'email', 'message']
+        required_fields = ['name', 'email', 'phone', 'message']
         for field in required_fields:
             if not data.get(field):
                 return jsonify({"error": f"Missing required field: {field}"}), 400
         
         name = data.get('name')
         email = data.get('email')
+        phone = data.get('phone')
         message = data.get('message')
         subject = data.get('subject', 'New Contact Form Submission')
         
@@ -43,7 +44,7 @@ def contact_form():
             return jsonify({"error": "Message too long"}), 400
         
         # Send email
-        success = send_contact_email(name, email, subject, message)
+        success = send_contact_email(name, email, subject, phone, message)
         
         if success:
             return jsonify({"message": "Email sent successfully"}), 200
@@ -54,7 +55,7 @@ def contact_form():
         print(f"Contact form error: {str(e)}")
         return jsonify({"error": "Internal server error"}), 500
 
-def send_contact_email(name, email, subject, message):
+def send_contact_email(name, email, phone, subject, message):
     """Send contact form email using SMTP"""
     try:
         # Email configuration from environment variables
@@ -80,6 +81,7 @@ def send_contact_email(name, email, subject, message):
         
         Name: {name}
         Email: {email}
+        Phone: {phone}
         Subject: {subject}
         
         Message:

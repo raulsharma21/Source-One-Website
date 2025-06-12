@@ -36,15 +36,15 @@ export default function Footer() {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 mt-0.5 shrink-0 text-[#5DA9E9]" />
-                <span>123 Import Drive, Duluth, MN 55802, USA</span>
+                <span>314 West Superior Street, Suite 502, Duluth, MN 55802, USA</span>
               </li>
               <li className="flex items-start">
                 <Phone className="h-5 w-5 mr-2 mt-0.5 shrink-0 text-[#5DA9E9]" />
-                <a href="tel:+12185550199" className="hover:text-primary transition-colors">(218) 555-0199</a>
+                <a href="tel:+12185550199" className="hover:text-primary transition-colors">(218) 740-3072</a>
               </li>
               <li className="flex items-start">
                 <Mail className="h-5 w-5 mr-2 mt-0.5 shrink-0 text-[#5DA9E9]" />
-                <a href="mailto:info@sourceone.com" className="hover:text-primary transition-colors">info@sourceone.com</a>
+                <a href="mailto:info@sourceone.com" className="hover:text-primary transition-colors">info@sourceoneus.com</a>
               </li>
             </ul>
           </div>

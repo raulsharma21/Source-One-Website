@@ -19,9 +19,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
   email: z.string().email({ message: "Please enter a valid email address." }),
+  phone: z.string().min(10, { message: "Phone number must be at least 10 digits." })
+    .regex(/^[\+]?[1-9][\d]{0,15}$/, { message: "Please enter a valid phone number." }),
   subject: z.string().min(5, { message: "Subject must be at least 5 characters."}),
   message: z.string().min(10, { message: "Message must be at least 10 characters." }),
 });
@@ -37,6 +41,7 @@ export function ContactForm() {
     defaultValues: {
       name: "",
       email: "",
+      phone: "",
       subject: "",
       message: "",
     },
@@ -45,7 +50,7 @@ export function ContactForm() {
   async function onSubmit(values: ContactFormValues) {
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,6 +108,24 @@ export function ContactForm() {
               <FormLabel>Email Address</FormLabel>
               <FormControl>
                 <Input type="email" placeholder="you@example.com" {...field} className="text-base"/>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Phone Number</FormLabel>
+              <FormControl>
+                <Input 
+                  type="tel" 
+                  placeholder="+1 (555) 123-4567" 
+                  {...field} 
+                  className="text-base"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -9,27 +9,30 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
+import WizardModal from '../components/WizardModal';
+import { submitProjectBrief } from './services/projectBrief';
+
 const testimonials = [
   {
-    quote: "Source One transformed our import process. Their expertise and transparent communication made global trade feel effortless. Highly recommended!",
-    name: "John Doe",
-    company: "Global Imports LLC",
-    avatar: "JD",
+    quote: "Greg, you have saved us millions of dollars, thank you!",
+    name: "Tim C, VP of Sales",
+    company: "OEM Sporting Goods Distributor",
+    avatar: "CR",
     image: "https://placehold.co/80x80.png",
-    hint: "man smiling",
+    hint: "person thinking",
   },
   {
-    quote: "The team at Source One is incredibly knowledgeable and responsive. They helped us navigate complex customs regulations with ease.",
-    name: "Jane Smith",
-    company: "Tech Solutions Inc.",
+    quote: "Over the past two decades Source One has become one of my most valuable suppliers. During that time, we’ve developed many new products from concept, to market, and they have produced with exceptional quality. They are always willing to accept a new design challenge and have always responded quickly with production samples, with competitive quotes, reasonable setup costs, and short turn-around times. I highly recommend considering Source One for your next new product, or if you are looking for another product source in the future!",
+    name: "Jeff B, Purchasing Manager",
+    company: "100+ Year Old Traffic Industry Company",
     avatar: "JS",
     image: "https://placehold.co/80x80.png",
     hint: "woman professional",
   },
   {
-    quote: "Partnering with Source One was a game-changer for our supply chain. Their innovative solutions saved us time and money.",
-    name: "Carlos Ray",
-    company: "Future Goods Co.",
+    quote: "Source One offers outstanding customer service and truly values partnership. Their attentive and helpful team consistently delivers excellent reporting and support, making them a trusted resource for both supply chain savings and product development needs.",
+    name: "KC, President",
+    company: "Sporting Goods Company",
     avatar: "CR",
     image: "https://placehold.co/80x80.png",
     hint: "person thinking",
@@ -106,7 +109,7 @@ const whatWeDoItems = [
   {
     icon: Factory,
     title: "Payments",
-    description: "We ",
+    description: "We handle all transactions with manufacturers, customs, and shipping to make your import experience seamless.",
   },
 ];
 
@@ -130,6 +133,8 @@ export default function Home() {
 
   const [typedMessage, setTypedMessage] = useState("");
 
+  const [isWizardOpen, setIsWizardOpen] = useState(false);
+
   useEffect(() => {
     if (typedMessage.length < fullWelcomeMessage.length) {
       const timer = setTimeout(() => {
@@ -138,6 +143,18 @@ export default function Home() {
       return () => clearTimeout(timer);
     }
   }, [typedMessage, fullWelcomeMessage, typingSpeed]);
+
+  const handleWizardSubmit = async (answers: Record<string, any>, contactData: any) => {
+  try {
+    const result = await submitProjectBrief({ answers, contactData });
+    if (result.success) {
+      alert('Project brief submitted successfully!');
+    }
+  } catch (error) {
+    console.error('Submission failed:', error);
+    alert('Failed to submit project brief. Please try again.');
+  }
+};
 
   const welcomePart = "Welcome to ";
   const sourceOnePart = "Source One";
@@ -161,29 +178,37 @@ export default function Home() {
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Hero Section */}
-      <section className="text-center py-12 md:py-16">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground min-h-[60px] sm:min-h-[72px] md:min-h-[80px]">
-          {displayWelcome}
-          <span className="text-primary">{displaySourceOne}</span>
-          <span className="text-foreground">{displayPeriod}</span>
-        </h1>
-        <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
-          Overseas, Sourcing, Hometown-Service
-        </p>
-        <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button asChild size="lg" className="transition-transform hover:scale-105" variant="secondary">
-            <Link href="/contact">
-              Tariffs and Exchange Rates <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-          <Button asChild variant="default" size="lg" className="transition-transform hover:scale-105">
-            <Link href="/about">
-              Learn About Us
-            </Link>
-          </Button>
-        </div>
-      </section>
+      {/* <section className="text-center py-12 md:py-16"> */}
+      <section className="text-center py-12 md:py-16 bg-cover bg-center relative" style={{ backgroundImage: 'url(/background.png)' }}>
 
+    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground min-h-[60px] sm:min-h-[72px] md:min-h-[80px]">
+      {displayWelcome}
+      <span className="text-primary">{displaySourceOne}</span>
+      <span className="text-foreground">{displayPeriod}</span>
+    </h1>
+    <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
+      Overseas, Sourcing, Hometown-Service
+    </p>
+    <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+      <Button size="lg" className="transition-transform hover:scale-105" variant="secondary" onClick={() => setIsWizardOpen(true)}>
+          Tariffs and Exchange Rates <ArrowRight className="ml-2 h-5 w-5" />
+      </Button>
+
+      <Button asChild variant="default" size="lg" className="transition-transform hover:scale-105">
+        <Link href="/about">
+          Learn About Us
+        </Link>
+      </Button>
+
+      <WizardModal 
+        isOpen={isWizardOpen}
+        onClose={() => setIsWizardOpen(false)}
+        onSubmit={handleWizardSubmit}
+      />
+    </div>
+  </section>
+
+      {/* Services Section */}
       {/* Retailer Logos Section - Carousel */}
       <section className="py-8">
         <h2 className="text-sm font-semibold text-center text-muted-foreground mb-6 uppercase tracking-wider">
@@ -208,10 +233,10 @@ export default function Home() {
       </section>
 
       {/* What We Do For You Section */}
-      <section className="py-12 md:py-16 bg-muted/50 rounded-lg">
+      <section className="py-12 md:py-16 rounded-lg bg-cover bg-center bg-no-repeat" style={{backgroundImage: 'url(/background.png)'}}>
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">What We Do For You</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {/* <h2 className="text-3xl font-bold text-center text-white mb-12">What We Do For You</h2> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-4xl mx-auto">
             {whatWeDoItems.map((item) => (
               <Card key={item.title} className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300">
                 <CardHeader>
@@ -247,16 +272,16 @@ export default function Home() {
       </section>
 
       {/* Customer Snapshot Section */}
-      <section className="py-12 md:py-16 bg-accent text-accent-foreground rounded-lg">
+      {/* <section className="py-12 md:py-16 bg-accent text-accent-foreground rounded-lg">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Customer Snapshot</h2>
-          <Star className="h-10 w-10 text-secondary mx-auto mb-4" />
+          <h2 className="text-3xl font-bold mb-4">Customer Testimonial</h2>
           <blockquote className="max-w-3xl mx-auto">
             <p className="text-2xl md:text-3xl font-medium italic mb-6">
-              “How a Midwest tool brand cut component costs 37% and hit shelves at Lowe’s in 6 months.”
+              “Greg, you have saved us millions of dollars, thank you!”
             </p>
             <footer className="text-sm uppercase tracking-wider">
-              - A Source One Success Story
+              <p> Tim C. VP of Sales </p> 
+              <p> OEM Sporting Goods Distributor </p>
             </footer>
           </blockquote>
            <div className="mt-8">
@@ -268,6 +293,35 @@ export default function Home() {
               className="w-full max-w-xl mx-auto h-auto object-cover rounded-lg shadow-xl transition-transform duration-500 hover:scale-105"
               data-ai-hint="tools hardware store"
             />
+          </div>
+        </div>
+      </section> */}
+
+      {/* Testimonials Section */}
+      <section className="py-12 md:py-16 bg-muted/30 rounded-lg">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center text-foreground mb-12 flex items-center justify-center">
+            <MessageSquareQuote className="mr-3 h-8 w-8 text-[#5DA9E9]" /> What Our Clients Say
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
+                <CardContent className="p-6 flex-grow flex flex-col">
+                  <MessageSquareQuote className="h-8 w-8 text-[#5DA9E9] mb-4" />
+                  <p className="text-muted-foreground mb-6 flex-grow">&ldquo;{testimonial.quote}&rdquo;</p>
+                  <div className="flex items-center mt-auto">
+                    <Avatar className="h-12 w-12 mr-4 border-2 border-primary">
+                      <AvatarImage src={testimonial.image} alt={`${testimonial.name}, client of Source One`} data-ai-hint={testimonial.hint}/>
+                      <AvatarFallback className="bg-muted text-foreground">{testimonial.avatar}</AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-semibold text-foreground">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.company}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -300,35 +354,6 @@ export default function Home() {
                 Contact Us at 1-888-USA-CHINA<ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="py-12 md:py-16 bg-muted/30 rounded-lg">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12 flex items-center justify-center">
-            <MessageSquareQuote className="mr-3 h-8 w-8 text-[#5DA9E9]" /> What Our Clients Say
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="flex flex-col shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-lg overflow-hidden">
-                <CardContent className="p-6 flex-grow flex flex-col">
-                  <MessageSquareQuote className="h-8 w-8 text-[#5DA9E9] mb-4" />
-                  <p className="text-muted-foreground mb-6 flex-grow">&ldquo;{testimonial.quote}&rdquo;</p>
-                  <div className="flex items-center mt-auto">
-                    <Avatar className="h-12 w-12 mr-4 border-2 border-primary">
-                      <AvatarImage src={testimonial.image} alt={`${testimonial.name}, client of Source One`} data-ai-hint={testimonial.hint}/>
-                      <AvatarFallback className="bg-muted text-foreground">{testimonial.avatar}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </div>
       </section>
