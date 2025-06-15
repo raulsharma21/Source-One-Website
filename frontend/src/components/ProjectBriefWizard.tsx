@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 /* =========================================================================
-   Project Brief Wizard Component - Reusable Version
+   Project Brief Wizard Component - Modal Ready Version
    ========================================================================= */
 
 interface ProjectBriefWizardProps {
@@ -33,12 +33,19 @@ interface RadioQuestion {
   type: "radio";
   options: string[];
 }
+interface TextQuestion {
+  id: string;
+  text: string;
+  type: "text";
+  placeholder?: string;
+}
 
-type Question = SingleQuestion | NumberDateQuestion | RadioQuestion;
+type Question = SingleQuestion | NumberDateQuestion | RadioQuestion | TextQuestion;
 
 /** -------------------------------------------------------------------------
  * Survey content
  * --------------------------------------------------------------------- */
+
 const QUESTIONS: Question[] = [
   {
     id: "productType",
@@ -60,6 +67,7 @@ const QUESTIONS: Question[] = [
       "Requesting quotes",
       "Sampling / prototyping",
       "Producing but facing issues",
+      "Finding China Alternatives",
     ],
   },
   {
@@ -71,24 +79,13 @@ const QUESTIONS: Question[] = [
       "Rising costs",
       "Slow lead‑times",
       "Regulatory / compliance",
+      "Rising Tariffs",
     ],
   },
   {
-    id: "annualVolume",
-    text: "Rough annual volume (units or $000s)?",
-    type: "number",
-    placeholder: "e.g. 10 000 or 250",
-  },
-  {
-    id: "targetDate",
-    text: "When do you need the first shipment in market?",
-    type: "date",
-  },
-  {
-    id: "hts",
-    text: "Know your HS / HTS code?",
-    type: "radio",
-    options: ["Yes", "No", "Not sure"],
+    id: "productCategory",
+    text: "Type in the product category / item you are looking to import",
+    type: "text",
   },
 ];
 
@@ -194,68 +191,66 @@ export default function ProjectBriefWizard({
    * --------------------------------------------------------- */
   if (step === total) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white px-4">
-        <Card className="max-w-lg w-full shadow p-8">
-          <h2 className="text-2xl font-semibold mb-4 text-black">
-            Where should we send your personalised PDF?
-          </h2>
-          <form
-            className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target as HTMLFormElement);
-              const contactData = {
-                name: formData.get('name') as string,
-                email: formData.get('email') as string,
-                company: formData.get('company') as string
-              };
-              
-              if (onSubmit) {
-                onSubmit(answers, contactData);
-              } else {
-                // Default behavior
-                alert("Submitted! (connect API endpoint)");
-              }
-              onClose();
-            }}
-          >
-            <input 
-              name="name"
-              type="text" 
-              placeholder="Name (optional)" 
-              className="w-full border rounded px-3 py-2" 
-            />
-            <input
-              name="email"
-              type="email"
-              placeholder="Email *"
-              required
-              className="w-full border rounded px-3 py-2"
-            />
-            <input
-              name="company"
-              type="text"
-              placeholder="Company & role (optional)"
-              className="w-full border rounded px-3 py-2"
-            />
-            <div className="space-y-3 pt-2">
-              <PrimaryBtn type="submit">Email my PDF</PrimaryBtn>
-              <OutlineBtn type="submit">Book 15‑min Consult & Email PDF</OutlineBtn>
-            </div>
-          </form>
-          <p className="text-sm text-gray-500 mt-4">
-            We'll send your tailored Sourcing Snapshot within minutes. Check your inbox (and spam folder).
-          </p>
-          <div className="flex justify-between pt-6">
-            <button className="text-sm underline" onClick={prev}>
-              ← Back
-            </button>
-            <button className="text-sm underline text-red-500" onClick={onClose}>
-              Close
-            </button>
+      <Card className="w-full shadow-lg p-8">
+        <h2 className="text-2xl font-semibold mb-4 text-black">
+          Where should we send your personalised PDF?
+        </h2>
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const contactData = {
+              name: formData.get('name') as string,
+              email: formData.get('email') as string,
+              company: formData.get('company') as string
+            };
+            
+            if (onSubmit) {
+              onSubmit(answers, contactData);
+            } else {
+              // Default behavior
+              alert("Submitted! (connect API endpoint)");
+            }
+            onClose();
+          }}
+        >
+          <input 
+            name="name"
+            type="text" 
+            placeholder="Name (optional)" 
+            className="w-full border rounded px-3 py-2" 
+          />
+          <input
+            name="email"
+            type="email"
+            placeholder="Email *"
+            required
+            className="w-full border rounded px-3 py-2"
+          />
+          <input
+            name="company"
+            type="text"
+            placeholder="Company & role (optional)"
+            className="w-full border rounded px-3 py-2"
+          />
+          <div className="space-y-3 pt-2">
+            <PrimaryBtn type="submit">Email my PDF</PrimaryBtn>
+            <OutlineBtn type="submit">Book 15‑min Consult & Email PDF</OutlineBtn>
           </div>
-        </Card>
-      </div>
+        </form>
+        <p className="text-sm text-gray-500 mt-4">
+          We'll send your tailored Sourcing Snapshot within minutes. Check your inbox (and spam folder).
+        </p>
+        <div className="flex justify-between pt-6">
+          <button className="text-sm underline" onClick={prev}>
+            ← Back
+          </button>
+          <button className="text-sm underline text-red-500" onClick={onClose}>
+            Close
+          </button>
+        </div>
+      </Card>
     );
   }
 
@@ -265,66 +260,80 @@ export default function ProjectBriefWizard({
   const progress = Math.round(((step + 1) / (total + 1)) * 100); // +1 for contact screen
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4">
-      <Card className="max-w-lg w-full shadow p-8">
-        {/* progress bar */}
-        <div className="w-full h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
-          <div
-            style={{ width: `${progress}%`, backgroundColor: PRIMARY_BLUE }}
-            className="h-full transition-all"
+    <Card className="w-full shadow-lg p-8">
+      {/* progress bar */}
+      <div className="w-full h-2 bg-gray-200 rounded-full mb-6 overflow-hidden">
+        <div
+          style={{ width: `${progress}%`, backgroundColor: PRIMARY_BLUE }}
+          className="h-full transition-all"
+        />
+      </div>
+
+      {/* question text */}
+      <h2 className="text-xl font-semibold mb-6 text-black">{current!.text}</h2>
+
+      {/* single‑select buttons & radio auto‑advance */}
+      {((current!.type === "single") || (current!.type === "radio")) && (
+        <ChoiceList options={(current as SingleQuestion | RadioQuestion).options} onSelect={saveAndNext} />
+      )}
+
+      {/* numeric input */}
+      {current!.type === "number" && (
+        <div className="space-y-4">
+          <input
+            type="number"
+            placeholder={current.placeholder || ""}
+            className="w-full border rounded px-3 py-2"
+            onChange={(e) => saveAnswer(e.target.value)}
           />
+          <PrimaryBtn disabled={!answers[current.id]} onClick={next}>
+            Next
+          </PrimaryBtn>
         </div>
+      )}
 
-        {/* question text */}
-        <h2 className="text-xl font-semibold mb-6 text-black">{current!.text}</h2>
-
-        {/* single‑select buttons & radio auto‑advance */}
-        {((current!.type === "single") || (current!.type === "radio")) && (
-          <ChoiceList options={(current as SingleQuestion | RadioQuestion).options} onSelect={saveAndNext} />
-        )}
-
-        {/* numeric input */}
-        {current!.type === "number" && (
-          <div className="space-y-4">
-            <input
-              type="number"
-              placeholder={current.placeholder || ""}
-              className="w-full border rounded px-3 py-2"
-              onChange={(e) => saveAnswer(e.target.value)}
-            />
-            <PrimaryBtn disabled={!answers[current.id]} onClick={next}>
-              Next
-            </PrimaryBtn>
-          </div>
-        )}
-
-        {/* date input */}
-        {current!.type === "date" && (
-          <div className="space-y-4">
-            <input
-              type="date"
-              className="w-full border rounded px-3 py-2"
-              onChange={(e) => saveAnswer(e.target.value)}
-            />
-            <PrimaryBtn disabled={!answers[current.id]} onClick={next}>
-              Next
-            </PrimaryBtn>
-          </div>
-        )}
-
-        {/* back button */}
-        <div className="pt-6 flex justify-between">
-          {step > 0 ? (
-            <button className="text-sm underline" onClick={prev}>
-              ← Back
-            </button>
-          ) : (
-            <button className="text-sm underline text-red-500" onClick={onClose}>
-              Close
-            </button>
-          )}
+      {/* date input */}
+      {current!.type === "date" && (
+        <div className="space-y-4">
+          <input
+            type="date"
+            className="w-full border rounded px-3 py-2"
+            onChange={(e) => saveAnswer(e.target.value)}
+          />
+          <PrimaryBtn disabled={!answers[current.id]} onClick={next}>
+            Next
+          </PrimaryBtn>
         </div>
-      </Card>
-    </div>
+      )}
+
+      {/* text input */}
+      {current!.type === "text" && (
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder={(current as TextQuestion).placeholder || ""}
+            className="w-full border rounded px-3 py-2"
+            value={answers[current.id] || ""}
+            onChange={(e) => saveAnswer(e.target.value)}
+          />
+          <PrimaryBtn disabled={!answers[current.id]} onClick={next}>
+            Next
+          </PrimaryBtn>
+        </div>
+      )}
+
+      {/* back button */}
+      <div className="pt-6 flex justify-between">
+        {step > 0 ? (
+          <button className="text-sm underline" onClick={prev}>
+            ← Back
+          </button>
+        ) : (
+          <button className="text-sm underline text-red-500" onClick={onClose}>
+            Close
+          </button>
+        )}
+      </div>
+    </Card>
   );
 }

@@ -59,7 +59,7 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                    <Link href="/" onClick={() => setMobileMenuOpen(false)} className="transition-opacity hover:opacity-80">
                       <Image
-                        src="/sourceonelogo.png" // Also relative to the 'public' directory
+                        src="/Transparentlogo.png" // Also relative to the 'public' directory
                         alt="Source One Enterprises Logo"
                         width={200}
                         height={125}
