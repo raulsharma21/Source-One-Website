@@ -36,7 +36,7 @@ const sixStepProcess = [
   { icon: Handshake, title: "Negotiate & Sample", description: "Secure competitive pricing and approve pre-production samples." },
   { icon: ShieldCheck, title: "QA & Compliance", description: "Ensure your products meet all quality and regulatory standards." },
   { icon: Ship, title: "Ship & Clear Customs", description: "Manage global logistics and navigate customs procedures seamlessly." },
-  { icon: Repeat, title: "Deliver & Repeat", description: "Establishing a reliable ongoing supply chain." },
+  { icon: Repeat, title: "Deliver & Repeat", description: "Establish a reliable ongoing supply chain." },
 ];
 
 const successMetrics = [
