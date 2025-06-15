@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { CheckCircle, Package, Settings, Wrench, ClipboardList, Factory, Handshake, ShieldCheck, Ship, Truck, Repeat, BarChart3, Target, UserCheck, DollarSign, Search, FileText, ArrowRight } from "lucide-react";
+import { CheckCircle, Shirt, Crosshair, Coffee, Package, Settings, Wrench, ClipboardList, Factory, Handshake, ShieldCheck, Ship, Truck, Repeat, BarChart3, Target, UserCheck, DollarSign, Search, FileText, ArrowRight, Box, FactoryIcon, HandMetal, Hammer, Recycle, Layers, Disc } from "lucide-react";
 import Image from 'next/image';
 
 export const metadata: Metadata = {
@@ -13,11 +13,14 @@ export const metadata: Metadata = {
 };
 
 const readyForRetailBullets = [
-  { icon: Settings, text: "Plastics" },
+  { icon: Settings, text: "Steel" },
+  { icon: Recycle, text: "Plastics" },
+  { icon: Shirt, text: "Textiles" },
+  { icon: Crosshair, text: "Optics like crossbow scopes" },
+  { icon: Coffee, text: "Vacuum insulated products" },
+  { icon: Layers, text: "Carbon Fiber" },
+  { icon: Disc, text: "Aluminium" },
   { icon: Package, text: "Glass and Ceramics" },
-  { icon: UserCheck, text: "Carbon Fiber" },
-  { icon: FileText, text: "Aluminium" },
-  { icon: Truck, text: "Steel" },
 ];
 
 const oemComponentsBullets = [
@@ -29,16 +32,16 @@ const oemComponentsBullets = [
 
 const sixStepProcess = [
   { icon: ClipboardList, title: "Define Specs", description: "Clearly outline your product requirements and specifications." },
-  { icon: Factory, title: "Match Factory", description: "We identify and vet the ideal manufacturing partner for your needs." },
+  { icon: Factory, title: "Hand-Select Factory", description: "We identify and vet the ideal manufacturing partner for your needs." },
   { icon: Handshake, title: "Negotiate & Sample", description: "Secure competitive pricing and approve pre-production samples." },
   { icon: ShieldCheck, title: "QA & Compliance", description: "Ensure your products meet all quality and regulatory standards." },
   { icon: Ship, title: "Ship & Clear Customs", description: "Manage global logistics and navigate customs procedures seamlessly." },
-  { icon: Repeat, title: "Deliver & Repeat", description: "Receive your goods and establish a reliable ongoing supply chain." },
+  { icon: Repeat, title: "Deliver & Repeat", description: "Establishing a reliable ongoing supply chain." },
 ];
 
 const successMetrics = [
-    { value: "1.5 Million+", label: "Units Imported in 2024", icon: DollarSign },
-    { value: "500+", label: "Audited Factories", icon: Truck },
+    { value: "1.5 Million+", label: "Units Imported in 2024", icon: Package },
+    { value: "500+", label: "Audited Factories", icon: FactoryIcon },
     { value: "100%", label: "Containers QC-Passed", icon: CheckCircle },
 ];
 
