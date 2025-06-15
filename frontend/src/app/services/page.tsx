@@ -47,7 +47,7 @@ export default function ServicesPage() {
   return (
     <div className="space-y-16 md:space-y-24">
       {/* Overview Banner Section */}
-      <section className="text-center py-12">
+      <section className="text-center py-4">
         <h1 className="text-4xl sm:text-5xl font-bold text-foreground flex items-center justify-center tracking-tight min-h-[60px] sm:min-h-[72px]">
           <Truck className="mr-3 h-10 w-10 sm:h-12 sm:w-12 text-[#5DA9E9]" />
           Our Services
@@ -58,7 +58,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Ready for Retail Section */}
-      <section className="py-12">
+      <section className="py-8">
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center">
@@ -116,16 +116,11 @@ export default function ServicesPage() {
             <BarChart3 className="mr-3 h-8 w-8 text-[#5DA9E9]" /> We'll Reach Out To You.
           </h2>
           <p className="max-w-2xl mx-auto text-lg mb-8">
-            Input your email below and we'll have our experts reach out to you with how we can help your business needs.
+            Input your contact information and we'll have our experts reach out to you with how we can help your business needs.
           </p>
           <form className="max-w-xl mx-auto flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <Input 
-              type="email" 
-              placeholder="Enter your email" 
-              className="flex-grow bg-background text-foreground placeholder:text-muted-foreground text-base" 
-            />
             <Button type="submit" variant="secondary" size="lg" className="transition-transform hover:scale-105 w-full sm:w-auto">
-              Send Email
+              Enter Your Contact Info
             </Button>
           </form>
            <p className="mt-4 text-xs">We'll contact you to discuss your needs. No obligation.</p>

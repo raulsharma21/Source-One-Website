@@ -179,15 +179,23 @@ export default function Home() {
     <div className="space-y-16 md:space-y-24">
       {/* Hero Section */}
       {/* <section className="text-center py-12 md:py-16"> */}
-      <section className="text-center py-12 md:py-16 bg-cover bg-center relative" style={{ backgroundImage: 'url(/background.png)' }}>
+    <section className="text-center py-8 md:py-4">
 
     <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-foreground min-h-[60px] sm:min-h-[72px] md:min-h-[80px]">
-      {displayWelcome}
-      <span className="text-primary">{displaySourceOne}</span>
-      <span className="text-foreground">{displayPeriod}</span>
+    {displayWelcome}
+    <span className="text-primary">{displaySourceOne}</span>
+    <span className="text-foreground">{displayPeriod}</span>
     </h1>
+    <Image
+      src="/sourceonelogo.png"
+      alt="Source One Logo"
+      width={1600}
+      height={1000}
+      className="mx-auto mt-4 mb-6 w-48 sm:w-56 md:w-64 object-contain"
+      data-ai-hint="Source One logo"
+    />
     <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
-      Overseas, Sourcing, Hometown-Service
+    Overseas, Sourcing, Hometown-Service
     </p>
     <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
       <Button size="lg" className="transition-transform hover:scale-105" variant="secondary" onClick={() => setIsWizardOpen(true)}>
