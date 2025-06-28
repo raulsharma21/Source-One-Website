@@ -272,27 +272,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         </CardContent>
       </Card>
 
-      {/* Related Articles Section */}
-      <Card className="mt-12">
-        <CardContent className="p-8 text-center">
-          <h3 className="text-xl font-semibold mb-4">Want to Stay Updated?</h3>
-          <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Get the latest insights on sourcing, importing, and supply chain management delivered automatically.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Button asChild variant="outline">
-              <Link href="/blog">
-                View All Articles
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link href="/contact">
-                Subscribe to Updates
-              </Link>
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
