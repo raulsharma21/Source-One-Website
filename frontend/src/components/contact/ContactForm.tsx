@@ -19,7 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://source-one-backend.vercel.app/';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://source-one-backend.vercel.app';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
