@@ -16,7 +16,7 @@ const readyForRetailBullets = [
   { icon: Settings, text: "Steel" },
   { icon: Recycle, text: "Plastics" },
   { icon: Shirt, text: "Textiles" },
-  { icon: Crosshair, text: "Optics like crossbow scopes" },
+  { icon: Crosshair, text: "Optics" },
   { icon: Coffee, text: "Vacuum insulated products" },
   { icon: Layers, text: "Carbon Fiber" },
   { icon: Disc, text: "Aluminium" },

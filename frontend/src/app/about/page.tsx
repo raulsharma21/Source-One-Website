@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "About Source One | Our Story, Mission, Values, and Global Team",
-  description: "Discover Source One's history, our mission for ethical global sourcing, core values, unique advantages, global team structure, and commitment to sustainability.",
+  description: "Discover Source One's history, our mission for ethical global sourcing, core values, unique advantages, global team structure, and commitment to ethical business.",
 };
 
 const values = [
@@ -169,25 +169,25 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Sustainability & Ethics Section */}
+      {/* Ethics Section */}
       <section className="py-12">
-         <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="rounded-lg overflow-hidden shadow-xl">
             <Image
               src="/SOimage4.jpeg"
-              alt="Symbolic image of sustainability or ethical practices"
+              alt="Symbolic image of ethical practices"
               width={600}
               height={400}
               className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
-              data-ai-hint="sustainability nature"
+              data-ai-hint="business ethics"
             />
           </div>
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center">
-              <Leaf className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Sustainability & Ethics
+              <ShieldCheck className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Ethics
             </h2>
             <p className="text-muted-foreground text-lg">
-              At Source One, we are committed to responsible sourcing. This includes rigorous factory audits to ensure safe labor practices and fair treatment of workers. We also champion carbon-smart shipping consolidations, minimizing environmental impact wherever possible. Building trust with ESG-minded prospects and clients is integral to our operations, reflecting our dedication to a sustainable and ethical global supply chain.
+              At Source One, we are committed to responsible sourcing. This includes rigorous factory audits to ensure safe labor practices and fair treatment of workers. We also champion carbon-smart shipping consolidations, minimizing environmental impact wherever possible. Building trust with ESG-minded prospects and clients is integral to our operations, reflecting our dedication to an ethical global supply chain.
             </p>
           </div>
         </div>

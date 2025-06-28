@@ -199,7 +199,7 @@ export default function Home() {
     </p>
     <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
       <Button size="lg" className="transition-transform hover:scale-105" variant="secondary" onClick={() => setIsWizardOpen(true)}>
-          Tariffs and Exchange Rates <ArrowRight className="ml-2 h-5 w-5" />
+          Get a Personalized Solution <ArrowRight className="ml-2 h-5 w-5" />
       </Button>
 
       <Button asChild variant="default" size="lg" className="transition-transform hover:scale-105">

@@ -54,8 +54,8 @@ const QUESTIONS: Question[] = [
     options: [
       "Finished consumer product",
       "Custom component / part",
-      "Packaging or label",
       "Exploring ideas",
+      "Other",
     ],
   },
   {
@@ -195,6 +195,9 @@ export default function ProjectBriefWizard({
         <h2 className="text-2xl font-semibold mb-4 text-black">
           Where should we send your personalised PDF?
         </h2>
+        <p className="text-sm text-gray-500 mt-4">
+          We'll send your tailored Sourcing Snapshot within minutes. Check your inbox (and spam folder).
+        </p>
         <form
           className="space-y-4"
           onSubmit={(e) => {
@@ -235,13 +238,10 @@ export default function ProjectBriefWizard({
             className="w-full border rounded px-3 py-2"
           />
           <div className="space-y-3 pt-2">
-            <PrimaryBtn type="submit">Email my PDF</PrimaryBtn>
-            <OutlineBtn type="submit">Book 15‑min Consult & Email PDF</OutlineBtn>
+            <PrimaryBtn type="submit">Email me my PDF</PrimaryBtn>
+            <OutlineBtn type="submit">Book 15‑min Consult & Email me my PDF</OutlineBtn>
           </div>
         </form>
-        <p className="text-sm text-gray-500 mt-4">
-          We'll send your tailored Sourcing Snapshot within minutes. Check your inbox (and spam folder).
-        </p>
         <div className="flex justify-between pt-6">
           <button className="text-sm underline" onClick={prev}>
             ← Back
