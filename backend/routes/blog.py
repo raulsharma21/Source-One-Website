@@ -10,8 +10,7 @@ import uuid
 blog_bp = Blueprint('blog', __name__)
 
 # GitHub configuration
-GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-GITHUB_REPO = os.getenv('GITHUB_REPO')  # format: "username/repository-name"
+GITHUB_REPO = os.getenv('GITHUB_REPO', 'raulsharma21/Source-One-Website')  # Default fallback
 GITHUB_BRANCH = os.getenv('GITHUB_BRANCH', 'main')
 
 # GitHub API base URL
@@ -37,9 +36,9 @@ def generate_blog_internal():
         # Get GitHub configuration from request (passed by GitHub Actions)
         data = request.get_json() or {}
         github_config = {
-            'token': data.get('github_token') or GITHUB_TOKEN,
-            'repo': data.get('github_repo') or GITHUB_REPO,
-            'branch': data.get('github_branch') or GITHUB_BRANCH
+            'token': data.get('github_token'),  # Only for writing
+            'repo': data.get('github_repo', GITHUB_REPO),
+            'branch': data.get('github_branch', GITHUB_BRANCH)
         }
         
         # Generate and store new blog
@@ -102,26 +101,6 @@ def get_latest_blog():
         return jsonify({"error": "Failed to fetch latest blog"}), 500
 
 @blog_bp.route('/blogs/<blog_id>', methods=['GET'])
-def send_weekly_summary():
-    """Admin endpoint to send weekly summary email"""
-    
-    # Verify internal API key
-    api_key = request.headers.get('X-Internal-API-Key')
-    if api_key != INTERNAL_API_KEY:
-        return jsonify({"error": "Unauthorized"}), 401
-    
-    try:
-        from email_notifications import send_weekly_summary_notification
-        success = send_weekly_summary_notification()
-        
-        if success:
-            return jsonify({"message": "Weekly summary sent successfully"}), 200
-        else:
-            return jsonify({"error": "Failed to send weekly summary"}), 500
-            
-    except Exception as e:
-        print(f"Error sending weekly summary: {str(e)}")
-        return jsonify({"error": "Internal server error"}), 500
 def get_blog_by_id(blog_id):
     """Public endpoint to fetch a specific blog by ID from GitHub"""
     try:
@@ -140,6 +119,34 @@ def get_blog_by_id(blog_id):
     except Exception as e:
         print(f"Error fetching blog {blog_id}: {str(e)}")
         return jsonify({"error": "Failed to fetch blog"}), 500
+
+@blog_bp.route('/debug-github', methods=['GET'])
+def debug_github():
+    """Debug endpoint to check GitHub API access"""
+    try:
+        repo = GITHUB_REPO
+        url = f"{GITHUB_API_BASE}/repos/{repo}/contents/{BLOGS_FILE_PATH}"
+        
+        print(f"Debug: Trying to fetch from {url}")
+        
+        response = requests.get(url, timeout=30)
+        
+        return jsonify({
+            "url": url,
+            "status_code": response.status_code,
+            "response_preview": response.text[:500] if response.text else "No response text",
+            "GITHUB_REPO": repo,
+            "BLOGS_FILE_PATH": BLOGS_FILE_PATH,
+            "repo_from_env": os.getenv('GITHUB_REPO', 'NOT_SET')
+        }), 200
+        
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "GITHUB_REPO": GITHUB_REPO,
+            "BLOGS_FILE_PATH": BLOGS_FILE_PATH,
+            "repo_from_env": os.getenv('GITHUB_REPO', 'NOT_SET')
+        }), 500
 
 def create_weekly_blog(github_config=None):
     """Generate a new blog post and store it in GitHub"""
@@ -179,20 +186,20 @@ def save_blog_to_github(blog_data, github_config=None):
     try:
         # Use provided config or fall back to environment variables
         if github_config:
-            token = github_config.get('token') or GITHUB_TOKEN
-            repo = github_config.get('repo') or GITHUB_REPO
-            branch = github_config.get('branch') or GITHUB_BRANCH
+            token = github_config.get('token')  # From GitHub Actions
+            repo = github_config.get('repo', GITHUB_REPO)
+            branch = github_config.get('branch', GITHUB_BRANCH)
         else:
-            token = GITHUB_TOKEN
+            token = None  # No token for reading
             repo = GITHUB_REPO
             branch = GITHUB_BRANCH
         
         if not token or not repo:
-            print("Missing GitHub configuration")
+            print(f"Missing GitHub configuration for writing: token={bool(token)}, repo={repo}")
             return False
         
-        # Load existing blogs
-        existing_blogs = load_blogs_from_github(github_config) or []
+        # Load existing blogs (no token needed for reading public repo)
+        existing_blogs = load_blogs_from_github() or []
         
         # Add new blog
         existing_blogs.append(blog_data)
@@ -201,12 +208,12 @@ def save_blog_to_github(blog_data, github_config=None):
         if len(existing_blogs) > 50:
             existing_blogs = sorted(existing_blogs, key=lambda x: x['generated_at'], reverse=True)[:50]
         
-        # Update blogs file in GitHub
+        # Update blogs file in GitHub (token needed for writing)
         blogs_success = update_github_file(
             BLOGS_FILE_PATH,
             json.dumps(existing_blogs, indent=2),
             f"Add new blog post: {blog_data['id'][:8]}",
-            github_config
+            {'token': token, 'repo': repo, 'branch': branch}
         )
         
         if not blogs_success:
@@ -224,7 +231,7 @@ def save_blog_to_github(blog_data, github_config=None):
             METADATA_FILE_PATH,
             json.dumps(metadata, indent=2),
             f"Update metadata for blog: {blog_data['id'][:8]}",
-            github_config
+            {'token': token, 'repo': repo, 'branch': branch}
         )
         
         return blogs_success and metadata_success
@@ -233,32 +240,27 @@ def save_blog_to_github(blog_data, github_config=None):
         print(f"Error saving blog to GitHub: {str(e)}")
         return False
 
-def load_blogs_from_github(github_config=None):
-    """Load blogs from GitHub repository"""
+def load_blogs_from_github():
+    """Load blogs from GitHub repository (no token needed for public repo)"""
     try:
-        # Use provided config or fall back to environment variables
-        if github_config:
-            token = github_config.get('token') or GITHUB_TOKEN
-            repo = github_config.get('repo') or GITHUB_REPO
-        else:
-            token = GITHUB_TOKEN
-            repo = GITHUB_REPO
+        repo = GITHUB_REPO
         
-        if not token or not repo:
-            print("Missing GitHub configuration")
+        if not repo:
+            print("Missing GitHub repo configuration")
             return []
         
-        # Get file from GitHub
+        # Get file from GitHub (no token needed for public repos)
         url = f"{GITHUB_API_BASE}/repos/{repo}/contents/{BLOGS_FILE_PATH}"
-        headers = {
-            'Authorization': f'token {token}',
-            'Accept': 'application/vnd.github.v3+json'
-        }
         
-        response = requests.get(url, headers=headers)
+        print(f"Loading blogs from: {url}")
+        
+        response = requests.get(url, timeout=30)
+        
+        print(f"GitHub API response status: {response.status_code}")
         
         if response.status_code == 404:
             # File doesn't exist yet, return empty list
+            print("Blogs file not found (404) - returning empty list")
             return []
         
         if response.status_code != 200:
@@ -268,24 +270,24 @@ def load_blogs_from_github(github_config=None):
         file_data = response.json()
         content = base64.b64decode(file_data['content']).decode('utf-8')
         
-        return json.loads(content)
+        blogs = json.loads(content)
+        print(f"Successfully loaded {len(blogs)} blogs from GitHub")
+        return blogs
         
     except Exception as e:
         print(f"Error loading blogs from GitHub: {str(e)}")
         return None
 
-def update_github_file(file_path, content, commit_message, github_config=None):
+def update_github_file(file_path, content, commit_message, github_config):
     """Update or create a file in GitHub repository"""
     try:
-        # Use provided config or fall back to environment variables
-        if github_config:
-            token = github_config.get('token') or GITHUB_TOKEN
-            repo = github_config.get('repo') or GITHUB_REPO
-            branch = github_config.get('branch') or GITHUB_BRANCH
-        else:
-            token = GITHUB_TOKEN
-            repo = GITHUB_REPO
-            branch = GITHUB_BRANCH
+        token = github_config.get('token')
+        repo = github_config.get('repo')
+        branch = github_config.get('branch', 'main')
+        
+        if not token or not repo:
+            print(f"Missing GitHub config for update: token={bool(token)}, repo={repo}")
+            return False
         
         headers = {
             'Authorization': f'token {token}',
@@ -372,14 +374,3 @@ def generate_sourcing_blog_content(max_words=600):
     except Exception as e:
         print(f"AI generation error: {str(e)}")
         return None
-
-def init_blog_system():
-    """Initialize the blog system"""
-    # Generate initial blog if none exist (only for local testing)
-    if os.getenv('FLASK_ENV') == 'development':
-        blogs = load_blogs_from_github()
-        if blogs is not None and len(blogs) == 0:
-            print("No blogs found. You can generate initial blog manually...")
-
-# Initialize the system
-init_blog_system()
