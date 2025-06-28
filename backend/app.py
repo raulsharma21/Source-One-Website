@@ -98,8 +98,7 @@ def create_app():
             "frontend_integration": {
                 "cors_enabled": True,
                 "allowed_origins": [
-                    "https://source-one-website.vercel.app",
-                    "http://localhost:3000" 
+                    "https://source-one-website.vercel.app", 
                 ]
             }
         })
