@@ -1,0 +1,100 @@
+# .github/workflows/weekly-blog.yml
+name: Weekly Blog Generation
+
+on:
+  schedule:
+    # Runs every Sunday at 9:00 AM UTC
+    - cron: '0 9 * * 0'
+  workflow_dispatch:
+
+# Set permissions for the built-in GITHUB_TOKEN
+permissions:
+  contents: write    # Allows writing to repository
+  actions: read      # Allows reading action metadata
+
+jobs:
+  generate-blog:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          # Use the built-in GITHUB_TOKEN (most secure)
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Generate Weekly Blog
+        env:
+          # Make GitHub info available for the API call
+          REPO_NAME: ${{ github.repository }}
+          BRANCH_NAME: ${{ github.ref_name }}
+          GITHUB_TOKEN_VALUE: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Generating weekly blog post..."
+          echo "Repository: $REPO_NAME"
+          echo "Branch: $BRANCH_NAME"
+          
+          # Make API call to your Vercel backend with GitHub config
+          response=$(curl -s -w "%{http_code}" -X POST \
+            https://source-one-backend.vercel.app/api/generate-blog-internal \
+            -H "X-Internal-API-Key: ${{ secrets.INTERNAL_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"github_token\": \"$GITHUB_TOKEN_VALUE\",
+              \"github_repo\": \"$REPO_NAME\",
+              \"github_branch\": \"$BRANCH_NAME\"
+            }")
+          
+          # Extract HTTP status code
+          http_code="${response: -3}"
+          response_body="${response%???}"
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $response_body"
+          
+          if [ "$http_code" -eq 200 ]; then
+            echo "✅ Blog generated and stored successfully!"
+          else
+            echo "❌ Blog generation failed with status $http_code"
+            echo "Response: $response_body"
+            exit 1
+          fi
+
+      - name: Verify Storage Files
+        run: |
+          echo "Checking for storage files..."
+          
+          # Wait for GitHub API to process changes
+          sleep 10
+          
+          if [ -f "storage/blogs.json" ]; then
+            echo "✅ blogs.json exists"
+            echo "File size: $(stat -f%z storage/blogs.json 2>/dev/null || stat -c%s storage/blogs.json) bytes"
+          else
+            echo "❌ blogs.json not found"
+          fi
+          
+          if [ -f "storage/blog_metadata.json" ]; then
+            echo "✅ blog_metadata.json exists"
+            echo "Metadata content:"
+            cat storage/blog_metadata.json
+          else
+            echo "❌ blog_metadata.json not found"
+          fi
+
+      - name: Commit and Push Changes (if any)
+        run: |
+          # Configure git (required for commits)
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if there are changes to commit
+          if git diff --quiet && git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            echo "Committing storage file changes..."
+            git add storage/
+            git commit -m "Update blog storage files - $(date)"
+            git push
+            echo "✅ Changes pushed to repository"
+          fi
