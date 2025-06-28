@@ -120,33 +120,6 @@ def get_blog_by_id(blog_id):
         print(f"Error fetching blog {blog_id}: {str(e)}")
         return jsonify({"error": "Failed to fetch blog"}), 500
 
-@blog_bp.route('/debug-github', methods=['GET'])
-def debug_github():
-    """Debug endpoint to check GitHub API access"""
-    try:
-        repo = GITHUB_REPO
-        url = f"{GITHUB_API_BASE}/repos/{repo}/contents/{BLOGS_FILE_PATH}"
-        
-        print(f"Debug: Trying to fetch from {url}")
-        
-        response = requests.get(url, timeout=30)
-        
-        return jsonify({
-            "url": url,
-            "status_code": response.status_code,
-            "response_preview": response.text[:500] if response.text else "No response text",
-            "GITHUB_REPO": repo,
-            "BLOGS_FILE_PATH": BLOGS_FILE_PATH,
-            "repo_from_env": os.getenv('GITHUB_REPO', 'NOT_SET')
-        }), 200
-        
-    except Exception as e:
-        return jsonify({
-            "error": str(e),
-            "GITHUB_REPO": GITHUB_REPO,
-            "BLOGS_FILE_PATH": BLOGS_FILE_PATH,
-            "repo_from_env": os.getenv('GITHUB_REPO', 'NOT_SET')
-        }), 500
 
 def create_weekly_blog(github_config=None):
     """Generate a new blog post and store it in GitHub"""

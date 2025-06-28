@@ -76,12 +76,7 @@ def create_app():
                         "access": "Private - GitHub Actions only",
                         "auth": "X-Internal-API-Key header required"
                     },
-                    "debug_github": {
-                        "url": "/api/debug-github", 
-                        "method": "GET",
-                        "description": "Debug GitHub API connectivity",
-                        "access": "Public (temporary - remove in production)"
-                    }
+                    
                 },
                 "contact_endpoints": {
                     "submit_contact": {
