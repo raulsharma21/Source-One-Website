@@ -35,7 +35,7 @@ const sixStepProcess = [
   { icon: Factory, title: "Hand-Select Factory", description: "We identify and vet the ideal manufacturing partner for your needs." },
   { icon: Handshake, title: "Negotiate & Sample", description: "Secure competitive pricing and approve pre-production samples." },
   { icon: ShieldCheck, title: "QA & Compliance", description: "Ensure your products meet all quality and regulatory standards." },
-  { icon: Ship, title: "Ship & Clear Customs", description: "Manage global logistics and navigate customs procedures seamlessly." },
+  { icon: Ship, title: "Manage Shipment", description: "Manage global logistics, customs, and payment." },
   { icon: Repeat, title: "Deliver & Repeat", description: "Establish a reliable ongoing supply chain." },
 ];
 

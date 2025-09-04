@@ -123,8 +123,8 @@ const whySourceOneItems = [
 const ctaSteps = [
   { icon: Phone, title: "1. Initial Call", description: "Discuss your project needs with our experts." },
   { icon: ClipboardList, title: "2. Assess Synergies", description: "We're a boutique firm where fit and relationships matter." },
-  { icon: PackageSearch, title: "3. Meet in Person", description: "Review and approve samples before production." },
-  { icon: FileCheck2, title: "4. Product Details", description: "Place your first production order with confidence." },
+  { icon: PackageSearch, title: "3. Meet in Person", description: "Review drawings, samples, requirements." },
+  { icon: FileCheck2, title: "4. Finalize Factory Details", description: "Choose from prequalified factory options." },
 ];
 
 export default function Home() {

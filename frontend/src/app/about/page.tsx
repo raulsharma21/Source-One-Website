@@ -1,4 +1,3 @@
-
 import type { Metadata } from 'next';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const values = [
-  { name: "Family-Focused Parnership", icon: HeartHandshake, description: "Operating with unwavering honesty and ethical principles in all our dealings." },
+  { name: "Family-Focused Partnership", icon: HeartHandshake, description: "Operating with unwavering honesty and ethical principles in all our dealings." },
   { name: "Integrity and Transparency", icon: Users, description: "Building lasting relationships based on trust, transparency, and mutual success." },
   { name: "Proven Quality and Compliance", icon: ShieldCheck, description: "Constantly seeking better ways to serve our clients and optimize processes." },
   { name: "Relentless Cost Optimization", icon: TrendingUp, description: "Prioritizing the safety of people and the quality of products above all." },
@@ -33,9 +32,19 @@ const teamMembers = [
 ];
 
 const timelineEvents = [
-    { year: "1995", event: "Source One Founded", description: "Founded in Duluth with a vision to simplify global sourcing.", icon: Rocket },
-    { year: "1997", event: "Opened Asian Office in Ningbo China", description: "Expanded services for OEM components and opened our China headquarters.", icon: Factory },
-    { year: "2025", event: "Celebrated 30 Years of Business", description: "30 years of helping customers lower their product procurement costs.", icon: BarChart3 },
+  { year: "1995", event: "Source One Founded", description: "Founded in Duluth with a vision to simplify global sourcing.", icon: Rocket },
+  { year: "1997", event: "Opened Asian Office in Ningbo China", description: "Expanded services for OEM components and opened our China headquarters.", icon: Factory },
+  { year: "2025", event: "Celebrated 30 Years of Business", description: "30 years of helping customers lower their product procurement costs.", icon: BarChart3 },
+];
+
+// --- Sourcing countries (images expected in /public) ---
+const sourcingCountries = [
+  { name: "China",      img: "/china.jpg" },
+  { name: "Taiwan",     img: "/taiwan.jpg" },
+  { name: "India",      img: "/india.jpg" },
+  { name: "Vietnam",    img: "/vietnam.jpg" },
+  { name: "Cambodia",   img: "/cambodia.jpg" },
+  { name: "Indonesia",  img: "/indonesia.jpg" },
 ];
 
 export default function AboutPage() {
@@ -90,9 +99,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value) => (
               <Card key={value.name} className="text-center shadow-md hover:shadow-lg transition-shadow duration-300 p-6">
-                 <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary mb-4">
-                    <value.icon className="h-7 w-7 text-[#5DA9E9]" />
-                 </div>
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-primary mb-4">
+                  <value.icon className="h-7 w-7 text-[#5DA9E9]" />
+                </div>
                 <CardTitle className="text-xl font-semibold text-primary mb-2">{value.name}</CardTitle>
                 <CardDescription className="text-muted-foreground">{value.description}</CardDescription>
               </Card>
@@ -100,7 +109,42 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      
+
+      {/* --- Sourcing Footprint Section (moved here) --- */}
+      <section className="py-12">
+        <h2 className="text-3xl font-bold text-center text-foreground mb-12 flex items-center justify-center">
+          <Globe className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Sourcing Footprint
+        </h2>
+        <p className="text-center text-muted-foreground max-w-3xl mx-auto mb-10">
+          We partner with vetted SME factories across Asia to match quality, lead time, and cost objectives, all while maintaining rigorous compliance standards.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sourcingCountries.map((c) => (
+            <Card
+              key={c.name}
+              className="overflow-hidden group shadow-md hover:shadow-lg transition-shadow duration-300"
+            >
+              <div className="relative w-full h-56">
+                <Image
+                  src={c.img}
+                  alt={`${c.name} sourcing`}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority={false}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent" />
+                <div className="absolute bottom-3 left-4">
+                  <span className="inline-block px-3 py-1 rounded-full bg-background/80 text-foreground text-sm font-medium shadow">
+                    {c.name}
+                  </span>
+                </div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
 
       {/* Global Team Section */}
       <section className="py-12 bg-muted/50 rounded-lg">
@@ -113,9 +157,6 @@ export default function AboutPage() {
             <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
               <MapPin className="mr-2 h-7 w-7 text-[#5DA9E9]" /> Duluth HQ, USA
             </h3>
-            {/* <div className="rounded-lg overflow-hidden shadow-md mb-6">
-              <Image src="https://placehold.co/500x300.png" alt="Map of Duluth HQ" width={500} height={300} className="w-full h-auto object-cover" data-ai-hint="city map usa" />
-            </div> */}
             <div className="space-y-4">
               {/* First row - 2 members */}
               <div className="grid grid-cols-2 gap-4">
@@ -150,9 +191,6 @@ export default function AboutPage() {
             <h3 className="text-2xl font-semibold text-foreground mb-6 flex items-center">
               <MapPin className="mr-2 h-7 w-7 text-[#5DA9E9]" /> Ningbo HQ, China
             </h3>
-            {/* <div className="rounded-lg overflow-hidden shadow-md mb-6">
-              <Image src="https://placehold.co/500x300.png" alt="Map of Ningbo HQ" width={500} height={300} className="w-full h-auto object-cover" data-ai-hint="city map china"/>
-            </div> */}
             <div className="grid grid-cols-2 gap-4">
               {teamMembers.filter(m => m.city === "Ningbo HQ").map(member => (
                 <Card key={member.name} className="text-center p-4 shadow-sm">
@@ -199,18 +237,18 @@ export default function AboutPage() {
           <Milestone className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Journey: Key Milestones
         </h2>
         <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {timelineEvents.map((event) => (
-                    <Card key={event.year} className="text-center p-6 shadow-lg bg-background/10 hover:bg-background/20 transition-colors duration-300">
-                        <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/80 text-primary-foreground mb-4">
-                            <event.icon className="h-8 w-8 text-[#5DA9E9]" />
-                        </div>
-                        <CardTitle className="text-2xl font-semibold text-primary-foreground mb-2">{event.year}</CardTitle>
-                        <CardDescription className="text-lg font-medium text-accent-foreground/90 mb-1">{event.event}</CardDescription>
-                        <p className="text-sm text-accent-foreground/80">{event.description}</p>
-                    </Card>
-                ))}
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {timelineEvents.map((event) => (
+              <Card key={event.year} className="text-center p-6 shadow-lg bg-background/10 hover:bg-background/20 transition-colors duration-300">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary/80 text-primary-foreground mb-4">
+                  <event.icon className="h-8 w-8 text-[#5DA9E9]" />
+                </div>
+                <CardTitle className="text-2xl font-semibold text-primary-foreground mb-2">{event.year}</CardTitle>
+                <CardDescription className="text-lg font-medium text-accent-foreground/90 mb-1">{event.event}</CardDescription>
+                <p className="text-sm text-accent-foreground/80">{event.description}</p>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
     </div>
