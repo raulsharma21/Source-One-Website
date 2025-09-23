@@ -31,9 +31,9 @@ const oemComponentsBullets = [
 ];
 
 const sixStepProcess = [
-  { icon: ClipboardList, title: "Define Specs", description: "Clearly outline your product requirements and specifications." },
-  { icon: Factory, title: "Hand-Select Factory", description: "We identify and vet the ideal manufacturing partner for your needs." },
-  { icon: Handshake, title: "Negotiate & Sample", description: "Secure competitive pricing and approve pre-production samples." },
+  { icon: ClipboardList, title: "Initial Consultation", description: "Meet to determine fit and project scope." },
+  { icon: Factory, title: "Define Specs", description: "Clearly outline your product requirements and specifications." },
+  { icon: Handshake, title: "Select Factory → Negotiate → Sample", description: "Identify and vet the ideal manufacturing partner, secure competitive pricing, and approve pre-production samples." },
   { icon: ShieldCheck, title: "QA & Compliance", description: "Ensure your products meet all quality and regulatory standards." },
   { icon: Ship, title: "Manage Shipment", description: "Manage global logistics, customs, and payment." },
   { icon: Repeat, title: "Deliver & Repeat", description: "Establish a reliable ongoing supply chain." },
@@ -41,7 +41,7 @@ const sixStepProcess = [
 
 const successMetrics = [
     { value: "1.5 Million+", label: "Units Imported in 2024", icon: Package },
-    { value: "500+", label: "Audited Factories", icon: FactoryIcon },
+    { value: "", label: "Audited Factories", icon: FactoryIcon },
     { value: "100%", label: "Containers QC-Passed", icon: CheckCircle },
 ];
 
@@ -55,9 +55,6 @@ export default function ServicesPage() {
           <Truck className="mr-3 h-10 w-10 sm:h-12 sm:w-12 text-[#5DA9E9]" />
           Our Services
         </h1>
-        <p className="mt-4 max-w-2xl mx-auto text-lg text-muted-foreground">
-          From Idea to Store Shelf
-        </p>
       </section>
 
       {/* Ready for Retail Section */}
@@ -65,10 +62,11 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-3xl font-bold text-foreground mb-6 flex items-center">
-              <Package className="mr-3 h-8 w-8 text-[#5DA9E9]" /> An End To End Solution For Your Retail Ready Goods
+              <Package className="mr-3 h-8 w-8 text-[#5DA9E9]" /> An End To End Solution For OEM, Private Label, And Direct-To-Consumer
             </h2>
             <p className="text-muted-foreground mb-6 text-lg">
-              For private-label and direct-to-consumer (DTC) brands, getting your product shelf-ready is paramount. Source One manages the entire process, ensuring your goods arrive finished, packaged, and compliant, ready for your customers.
+              From parts, components, or finished products, Source One is here to support your sourcing requirements. 
+              A few materials we specialize in:
             </p>
             <ul className="space-y-3">
               {readyForRetailBullets.map((item) => (
@@ -112,39 +110,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* We'll Reach Out To You Section */}
-      <section className="py-12 bg-accent text-accent-foreground rounded-lg">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4 flex items-center justify-center">
-            <BarChart3 className="mr-3 h-8 w-8 text-[#5DA9E9]" /> We'll Reach Out To You.
-          </h2>
-          <p className="max-w-2xl mx-auto text-lg mb-8">
-            Input your contact information and we'll have our experts reach out to you with how we can help your business needs.
-          </p>
-          <form className="max-w-xl mx-auto flex flex-col sm:flex-row gap-4 items-center justify-center">
-            <Button type="submit" variant="secondary" size="lg" className="transition-transform hover:scale-105 w-full sm:w-auto">
-              Enter Your Contact Info
-            </Button>
-          </form>
-           <p className="mt-4 text-xs">We'll contact you to discuss your needs. No obligation.</p>
-        </div>
-      </section>
-
-      {/* Success Metrics Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-12">Our Proven Success</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {successMetrics.map((metric) => (
-              <Card key={metric.label} className="p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
-                <metric.icon className="h-12 w-12 text-[#5DA9E9] mx-auto mb-4" />
-                <p className="text-4xl font-bold text-primary mb-2">{metric.value}</p>
-                <p className="text-muted-foreground text-lg">{metric.label}</p>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      
       
       <section className="py-12 text-center bg-primary text-primary-foreground rounded-lg">
         <h2 className="text-3xl font-bold mb-4">Ready to Optimize Your Imports?</h2>

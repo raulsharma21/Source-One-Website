@@ -45,7 +45,7 @@ const answerImportQuestionPrompt = ai.definePrompt({
   tools: [getImportInformation],
   input: {schema: AnswerImportQuestionInputSchema},
   output: {schema: AnswerImportQuestionOutputSchema},
-  prompt: `You are an AI assistant that answers questions about the importing process. Use the getImportInformation tool to get up-to-date industry information.
+  prompt: `You are an AI assistant that answers questions about the 2025 importing process. Use the getImportInformation tool to get up-to-date industry information.
 
 Question: {{{question}}}
 

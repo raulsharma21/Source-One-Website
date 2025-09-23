@@ -19,7 +19,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-foreground mb-3">Source One</h3>
             <p className="text-sm">
-              Your trusted partner for seamless global importing. Over three decades of simplifying complexities, while ensuring your goods arrive efficiently and reliably.
+              30 years of experience ensuring your goods arrive efficiently and reliably.
             </p>
           </div>
           <div>

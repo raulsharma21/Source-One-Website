@@ -115,7 +115,7 @@ const whatWeDoItems = [
 
 const whySourceOneItems = [
   { icon: Globe, text: "U.S. & Asia offices" },
-  { icon: ListChecks, text: "500+ vetted factories" },
+  { icon: ListChecks, text: "Vetted factories" },
   { icon: Eye, text: "End-to-end oversight" },
   { icon: Globe, text: "Lifelong customers" }
 ];
@@ -334,43 +334,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Step-by-Step CTA Section */}
-      <section className="py-12 md:py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center text-foreground mb-4">Your Journey to Savings & Scale</h2>
-          <p className="text-lg text-muted-foreground text-center mb-12 max-w-2xl mx-auto">Follow our simple 4-step process to unlock global sourcing efficiencies and get your product to market.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 items-stretch">
-            {ctaSteps.map((step, index) => (
-              <div key={step.title} className="flex flex-col items-center text-center">
-                <div className="flex items-center justify-center h-16 w-16 rounded-full bg-primary text-primary-foreground mb-4 text-2xl font-bold">
-                  {index + 1}
-                </div>
-                <step.icon className="h-10 w-10 text-[#5DA9E9] mb-3" />
-                <h3 className="text-lg font-semibold text-foreground mb-1">{step.title}</h3>
-                <p className="text-sm text-muted-foreground flex-grow">{step.description}</p>
-              </div>
-            ))}
-          </div>
-          <div className="text-center mt-12  gap-4 flex flex-col sm:flex-row justify-center">
-            <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105">
-              <Link href="/contact">
-                Leave Your Number <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105">
-              <Link href="/contact">
-                Contact Us at 1-888-USA-CHINA<ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* Call to Action Section */}
       <section className="py-12 md:py-20 text-center bg-accent text-accent-foreground rounded-lg">
         <h2 className="text-3xl font-bold mb-6">Ready to Simplify Your Imports & Cut Landed Costs?</h2>
         <p className="max-w-xl mx-auto text-lg mb-8">
-        Our Duluth & Ningbo teams handle factory audits, freight, and customs, so you see the exact landed cost before you order.
+        Our U.S. and Asia teams are ready to support your next project.
         </p>
         <Button asChild size="lg" variant="secondary" className="transition-transform hover:scale-105" >
           <Link href="/contact">
