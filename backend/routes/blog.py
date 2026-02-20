@@ -1,10 +1,24 @@
 from flask import Blueprint, request, jsonify
 import os
 import json
+import re
 import requests
 import base64
 from datetime import datetime
 import uuid
+
+# Topic categories rotated weekly for variety (avoid repetitive tariff-focused posts)
+TOPIC_CATEGORIES = [
+    "recent U.S. tariff changes and their business impact",
+    "port congestion, shipping delays, or logistics updates",
+    "USMCA and trade agreement developments",
+    "sustainable and ethical sourcing trends",
+    "customs compliance and regulatory changes",
+    "currency fluctuations and import costs",
+    "industry-specific sourcing (electronics, apparel, or automotive)",
+    "nearshoring vs. offshoring analysis",
+    "supply chain technology (AI, blockchain, visibility tools)",
+]
 
 # Create blueprint
 blog_bp = Blueprint('blog', __name__)
@@ -299,42 +313,90 @@ def update_github_file(file_path, content, commit_message, github_config):
         print(f"Error updating GitHub file {file_path}: {str(e)}")
         return False
 
+def extract_title_from_content(content):
+    """Extract h1 or title from HTML content for deduplication."""
+    if not content:
+        return None
+    # Try <h1> first (most common in output)
+    h1_match = re.search(r'<h1[^>]*>(.*?)</h1>', content, re.DOTALL | re.IGNORECASE)
+    if h1_match:
+        return re.sub(r'<[^>]+>', '', h1_match.group(1)).strip()
+    # Fallback to <title>
+    title_match = re.search(r'<title[^>]*>(.*?)</title>', content, re.DOTALL | re.IGNORECASE)
+    if title_match:
+        return re.sub(r'<[^>]+>', '', title_match.group(1)).strip()
+    return None
+
+def get_topic_for_week():
+    """Select topic category based on week of year for variety."""
+    week_num = datetime.now().isocalendar()[1]
+    return TOPIC_CATEGORIES[week_num % len(TOPIC_CATEGORIES)]
+
 def generate_sourcing_blog_content(max_words=600):
-    """Generate blog content about current sourcing and importing events using OpenAI API"""
+    """Generate blog content about current sourcing and importing events using OpenAI API with web search for recency."""
     try:
         api_key = os.getenv('OPENAI_API_KEY')
         if not api_key:
             print("Missing OpenAI API key")
             return None
-        
+
+        # Load existing blogs to avoid repeating topics
+        existing_blogs = load_blogs_from_github() or []
+        sorted_blogs = sorted(existing_blogs, key=lambda x: x.get('generated_at', ''), reverse=True)
+        recent_titles = []
+        for blog in sorted_blogs[:10]:
+            title = extract_title_from_content(blog.get('content', ''))
+            if title:
+                recent_titles.append(title)
+        avoid_topics = ", ".join(recent_titles) if recent_titles else "None yet"
+
+        # Current date for recency focus
+        today = datetime.now().strftime("%B %d, %Y")
+
+        # Rotate topic for variety
+        topic_focus = get_topic_for_week()
+        print(f"Blog topic focus this week: {topic_focus}")
+
         headers = {
             'Authorization': f'Bearer {api_key}',
             'Content-Type': 'application/json'
         }
-        
+
+        system_content = (
+            'You are a business trade expert who writes authoritative, professional content for '
+            'industry professionals and decision-makers. Use web search to find CURRENT, RECENT '
+            'developments. Create engaging, factual blog posts that are exactly 600 words long. '
+            'Include a compelling title, introduction, main body with clear sections, and conclusion. '
+            'Format the content in clean HTML that can be used directly on a website.'
+        )
+
+        user_content = (
+            f'Today is {today}. Research and write a {max_words}-word blog post about sourcing and '
+            f'importing to the United States. FOCUS SPECIFICALLY on: {topic_focus}. '
+            f'Use web search to find recent news, data, and developments from the past 30-60 days. '
+            f'Include specific examples, data points, and implications for businesses. '
+            f'Format the output as clean HTML with proper heading tags (h1, h2, h3) and paragraph tags. '
+            f'CRITICAL: Do NOT write about topics similar to these recent posts: {avoid_topics}. '
+            f'Choose a distinct angle or development that has not been covered.'
+        )
+
         data = {
-            'model': 'gpt-4',
+            'model': 'gpt-4o-search-preview',
             'messages': [
-                {
-                    'role': 'system',
-                    'content': 'You are a business trade expert who writes authoritative, professional content for industry professionals and decision-makers. You have access to current information and should research and write about recent developments in sourcing and importing to the United States. Create engaging, factual blog posts that are exactly 600 words long. Include a compelling title, introduction, main body with clear sections, and conclusion. Format the content in clean HTML that can be used directly on a website.'
-                },
-                {
-                    'role': 'user',
-                    'content': f'Research and write a {max_words}-word blog post about one of the current events relating to sourcing and importing to the United States. Focus on recent developments (2024-2025) such as tariff changes, supply chain shifts, trade policy impacts, or emerging sourcing trends. Include specific examples, data points, and implications for businesses. Format the output as clean HTML with proper heading tags (h1, h2, h3) and paragraph tags that can be directly inserted into a website. Make this unique and different from previous posts.'
-                }
+                {'role': 'system', 'content': system_content},
+                {'role': 'user', 'content': user_content}
             ],
             'max_tokens': 2500,
-            'temperature': 0.7
+            'temperature': 0.8
         }
-        
+
         response = requests.post(
             'https://api.openai.com/v1/chat/completions',
             headers=headers,
             json=data,
-            timeout=45
+            timeout=90
         )
-        
+
         if response.status_code == 200:
             result = response.json()
             content = result['choices'][0]['message']['content']
@@ -343,7 +405,7 @@ def generate_sourcing_blog_content(max_words=600):
         else:
             print(f"OpenAI API error: {response.status_code} - {response.text}")
             return None
-            
+
     except Exception as e:
         print(f"AI generation error: {str(e)}")
         return None

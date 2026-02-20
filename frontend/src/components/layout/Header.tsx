@@ -27,7 +27,7 @@ export default function Header() {
             alt="Source One Enterprises Logo"
             width={200}
             height={125}
-            className="h-14 w-auto"
+            className="h-[4.5rem] w-auto"
             priority
           />
         </Link>
@@ -38,7 +38,7 @@ export default function Header() {
             <Link
               key={item.label}
               href={item.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              className="text-[18px] font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
             </Link>

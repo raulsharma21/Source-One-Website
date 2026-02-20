@@ -176,7 +176,7 @@ export default function Home() {
   }
 
   return (
-    <div className="space-y-16 md:space-y-24">
+    <div className="space-y-16 md:space-y-24 overflow-x-hidden">
       {/* Hero Section */}
       {/* <section className="text-center py-12 md:py-16"> */}
     <section className="text-center py-8 md:py-4">
@@ -186,16 +186,18 @@ export default function Home() {
     <span className="text-primary">{displaySourceOne}</span>
     <span className="text-foreground">{displayPeriod}</span>
     </h1>
-    <Image
-      src="/sourceonelogo.png"
-      alt="Source One Logo"
-      width={1600}
-      height={1000}
-      className="mx-auto mt-4 mb-6 w-48 sm:w-56 md:w-64 object-contain"
-      data-ai-hint="Source One logo"
-    />
+    <div className="relative w-screen max-w-none ml-[calc(50%-50vw)] mt-4 mb-6 h-[320px] sm:h-[400px] md:h-[480px] overflow-hidden">
+      <Image
+        src="/boxes.jpg"
+        alt="Container port and shipping"
+        fill
+        className="object-cover"
+        sizes="100vw"
+        priority
+      />
+    </div>
     <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
-    Overseas, Sourcing, Hometown-Service
+      Overseas, Sourcing, Hometown-Service.
     </p>
     <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
       <Button size="lg" className="transition-transform hover:scale-105" variant="secondary" onClick={() => setIsWizardOpen(true)}>
@@ -218,7 +220,7 @@ export default function Home() {
 
       {/* Services Section */}
       {/* Retailer Logos Section - Carousel */}
-      <section className="py-8">
+      <section className="pt-4 pb-8 !mt-6">
         <h2 className="text-sm font-semibold text-center text-muted-foreground mb-6 uppercase tracking-wider">
           Trusted by brands whose products are sold at
         </h2>
@@ -241,7 +243,7 @@ export default function Home() {
       </section>
 
       {/* What We Do For You Section */}
-      <section className="py-12 md:py-16 rounded-lg bg-cover bg-center bg-no-repeat" style={{backgroundImage: 'url(/background.png)'}}>
+      <section className="py-12 md:py-16 rounded-lg bg-cover bg-center bg-no-repeat" style={{backgroundImage: 'url(/4boxes.jpg)'}}>
         <div className="container mx-auto px-4">
           {/* <h2 className="text-3xl font-bold text-center text-white mb-12">What We Do For You</h2> */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-4xl mx-auto">

@@ -168,7 +168,7 @@ export default function AboutPage() {
       </section>
 
       {/* Global Team Section */}
-      /* Global Team Section (No-Warp Images, improved spacing) */
+      
 <section className="py-12 bg-muted/50 rounded-lg px-6 md:px-12">
   <h2 className="text-3xl font-bold text-center text-foreground mb-12 flex items-center justify-center">
     <Globe className="mr-3 h-8 w-8 text-[#5DA9E9]" /> Our Global Team
