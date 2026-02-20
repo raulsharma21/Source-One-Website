@@ -3,7 +3,6 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { ArrowRight, Globe, ShieldCheck, Lightbulb, MessageSquareQuote, Factory, Ship, Award, ListChecks, Eye, Phone, ClipboardList, PackageSearch, FileCheck2, Star, Settings, FileEdit, Handshake, Truck, Repeat, BarChart3 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -319,15 +318,9 @@ export default function Home() {
                 <CardContent className="p-6 flex-grow flex flex-col">
                   <MessageSquareQuote className="h-8 w-8 text-[#5DA9E9] mb-4" />
                   <p className="text-muted-foreground mb-6 flex-grow">&ldquo;{testimonial.quote}&rdquo;</p>
-                  <div className="flex items-center mt-auto">
-                    <Avatar className="h-12 w-12 mr-4 border-2 border-primary">
-                      <AvatarImage src={testimonial.image} alt={`${testimonial.name}, client of Source One`} data-ai-hint={testimonial.hint}/>
-                      <AvatarFallback className="bg-muted text-foreground">{testimonial.avatar}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-semibold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.company}</p>
-                    </div>
+                  <div className="mt-auto">
+                    <p className="font-semibold text-foreground">{testimonial.name}</p>
+                    <p className="text-sm text-muted-foreground">{testimonial.company}</p>
                   </div>
                 </CardContent>
               </Card>

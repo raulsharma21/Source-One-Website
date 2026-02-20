@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   description: "Stay informed with the latest articles, tips, and industry news on global importing, logistics, and supply chain management from the Source One blog.",
 };
 
+// Force dynamic rendering - avoid fetching backend during build (causes Vercel deploy failures)
+export const dynamic = 'force-dynamic';
+
 interface BlogPost {
   id: string;
   content: string;
