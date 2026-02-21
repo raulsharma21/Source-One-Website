@@ -185,6 +185,9 @@ export default function Home() {
     <span className="text-primary">{displaySourceOne}</span>
     <span className="text-foreground">{displayPeriod}</span>
     </h1>
+    <p className="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
+      Overseas, Sourcing, Hometown-Service.
+    </p>
     <div className="relative w-screen max-w-none ml-[calc(50%-50vw)] mt-4 mb-6 h-[320px] sm:h-[400px] md:h-[480px] overflow-hidden">
       <Image
         src="/boxes.jpg"
@@ -195,9 +198,6 @@ export default function Home() {
         priority
       />
     </div>
-    <p className="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted-foreground">
-      Overseas, Sourcing, Hometown-Service.
-    </p>
     <div className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
       <Button size="lg" className="transition-transform hover:scale-105" variant="secondary" onClick={() => setIsWizardOpen(true)}>
           Get a Personalized Solution <ArrowRight className="ml-2 h-5 w-5" />

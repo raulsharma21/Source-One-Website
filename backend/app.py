@@ -14,8 +14,11 @@ def create_app():
     app = Flask(__name__)
     
     # Configure CORS using environment variables for security
-    # Default to production frontend only if not specified
-    allowed_origins = os.getenv('CORS_ORIGINS', 'https://source-one-website.vercel.app')
+    # Default includes production frontend and custom domain
+    allowed_origins = os.getenv(
+        'CORS_ORIGINS',
+        'https://source-one-website.vercel.app,https://sourceoneus.com,https://www.sourceoneus.com'
+    )
     cors_origins = [origin.strip() for origin in allowed_origins.split(',') if origin.strip()]
     
     print(f"🔒 CORS configured for origins: {cors_origins}")  # Debug log

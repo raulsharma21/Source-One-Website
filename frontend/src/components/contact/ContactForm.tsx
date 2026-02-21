@@ -65,10 +65,16 @@ export function ContactForm() {
         });
         form.reset();
       } else {
-        const errorData = await response.json();
+        let errorMessage = "Something went wrong. Please try again.";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || errorMessage;
+        } catch {
+          errorMessage = `Server error (${response.status}). Please try again.`;
+        }
         toast({
           title: "Error Sending Message",
-          description: errorData.message || "Something went wrong. Please try again.",
+          description: errorMessage,
           variant: "destructive",
         });
       }
