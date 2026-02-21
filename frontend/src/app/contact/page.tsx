@@ -23,16 +23,30 @@ export default function ContactPage() {
       </section>
 
       <section className="grid md:grid-cols-2 gap-12 items-start">
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-2xl font-semibold">Send Us a Message</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ContactForm />
-          </CardContent>
-        </Card>
+        <div className="space-y-6">
+          <Card className="shadow-lg overflow-hidden">
+            <CardContent className="p-0">
+              <Image
+                src="/contact2.jpg"
+                alt="Map showing the location of Source One's Duluth office"
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+                data-ai-hint="city map"
+              />
+            </CardContent>
+          </Card>
+          <Card className="shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl font-semibold">Send Us a Message</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ContactForm />
+            </CardContent>
+          </Card>
+        </div>
 
-        <div className="space-y-8">
+        <div>
           <Card className="shadow-lg">
             <CardHeader>
               <CardTitle className="text-2xl font-semibold">Our Office</CardTitle>
@@ -59,20 +73,6 @@ export default function ContactPage() {
                   <p className="text-muted-foreground">info@sourceoneus.com</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-          
-          <Card className="shadow-lg overflow-hidden">
-             
-            <CardContent className="p-0">
-               <Image
-                src="/contact2.jpg"
-                alt="Map showing the location of Source One's Duluth office"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover"
-                data-ai-hint="city map"
-              />
             </CardContent>
           </Card>
         </div>

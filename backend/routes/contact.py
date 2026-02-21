@@ -44,7 +44,7 @@ def contact_form():
             return jsonify({"error": "Message too long"}), 400
         
         # Send email
-        success = send_contact_email(name, email, subject, phone, message)
+        success = send_contact_email(name, email, phone, subject, message)
         
         if success:
             return jsonify({"message": "Email sent successfully"}), 200
@@ -61,18 +61,19 @@ def send_contact_email(name, email, phone, subject, message):
         # Email configuration from environment variables
         smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
         smtp_port = int(os.getenv('SMTP_PORT', '587'))
-        sender_email = os.getenv('SENDER_EMAIL')
+        sender_email = os.getenv('SENDER_EMAIL', 'info@sourceoneus.com')
         sender_password = os.getenv('SENDER_PASSWORD')
-        recipient_email = os.getenv('TEST_RECIPIENT_EMAIL')
+        recipient_email = os.getenv('CONTACT_RECIPIENT_EMAIL', 'gpoul@sourceoneus.com')
         
-        if not all([sender_email, sender_password, recipient_email]):
-            print("Missing email configuration")
+        if not all([sender_email, sender_password]):
+            print("Missing email configuration (SENDER_EMAIL, SENDER_PASSWORD)")
             return False
         
-        # Create message
+        # Create message - send TO gpoul, set Reply-To so "Reply" goes to the user
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = recipient_email
+        msg['Reply-To'] = email  # When gpoul replies, it goes to the form user
         msg['Subject'] = f"Contact Form: {subject}"
         
         # Email body
