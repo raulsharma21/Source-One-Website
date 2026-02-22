@@ -81,6 +81,18 @@ def extract_title_from_content(content: str):
     return None
 
 
+def _strip_markdown_code_blocks(text: str) -> str:
+    """Remove markdown code block wrappers (```html ... ```) from model output."""
+    text = text.strip()
+    if text.startswith("```html"):
+        text = text[7:].lstrip()
+    elif text.startswith("```"):
+        text = text[3:].lstrip()
+    if text.endswith("```"):
+        text = text[:-3].rstrip()
+    return text
+
+
 def get_topic_for_week() -> str:
     """Select topic based on week of year."""
     week_num = datetime.now().isocalendar()[1]
@@ -106,7 +118,7 @@ def generate_blog_content(api_key: str, repo: str, max_words: int = 600):
         "industry professionals and decision-makers. Use web search to find CURRENT, RECENT "
         "developments. Create engaging, factual blog posts that are exactly 600 words long. "
         "Include a compelling title, introduction, main body with clear sections, and conclusion. "
-        "Format the content in clean HTML that can be used directly on a website."
+        "Output ONLY raw HTML (h1, h2, h3, p tags). Do NOT wrap in markdown code blocks (no ```html or ```)."
     )
     user_content = (
         f"Today is {today}. Research and write a {max_words}-word blog post about sourcing and "
@@ -144,6 +156,7 @@ def generate_blog_content(api_key: str, repo: str, max_words: int = 600):
         )
         if response.status_code == 200:
             content = response.json()["choices"][0]["message"]["content"]
+            content = _strip_markdown_code_blocks(content)
             print(f"Generated with {model}: {len(content.split())} words")
             return content
         if attempt < len(models_to_try) - 1:

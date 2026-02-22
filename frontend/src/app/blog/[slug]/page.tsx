@@ -21,6 +21,15 @@ interface BlogPageProps {
   }>;
 }
 
+// Strip markdown code block wrappers from model output
+function stripMarkdownCodeBlocks(html: string): string {
+  let text = html.trim();
+  if (text.startsWith('```html')) text = text.slice(7).trim();
+  else if (text.startsWith('```')) text = text.slice(3).trim();
+  if (text.endsWith('```')) text = text.slice(0, -3).trim();
+  return text;
+}
+
 // Extract title from HTML content for metadata
 function extractTitle(htmlContent: string): string {
   const titleMatch = htmlContent.match(/<h1[^>]*>(.*?)<\/h1>/i);
@@ -244,7 +253,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
               prose-blockquote:border-l-primary prose-blockquote:bg-accent/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg
               prose-code:bg-accent prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
               prose-pre:bg-accent prose-pre:border"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: stripMarkdownCodeBlocks(post.content) }}
           />
 
           {/* Article Footer */}
@@ -252,7 +261,6 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
               <div className="text-sm text-muted-foreground">
                 <p>Published by <span className="font-medium text-foreground">Source One</span></p>
-                <p>Automated industry insights and analysis</p>
               </div>
               
               <div className="flex gap-2">
