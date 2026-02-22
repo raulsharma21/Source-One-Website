@@ -380,8 +380,16 @@ def generate_sourcing_blog_content(max_words=600):
             f'Choose a distinct angle or development that has not been covered.'
         )
 
+        # Model chain: mini with web search -> full search -> no-search fallback
+        # gpt-4o-mini-search-preview = fast, cheap, real-time web access (Chat Completions)
+        models_to_try = [
+            'gpt-4o-mini-search-preview',  # Mini with real-time web search
+            'gpt-4o-search-preview',       # Full 4o with web search
+            'gpt-4o',                      # No search, reliable fallback
+        ]
+
         data = {
-            'model': 'gpt-4o-search-preview',
+            'model': models_to_try[0],
             'messages': [
                 {'role': 'system', 'content': system_content},
                 {'role': 'user', 'content': user_content}
@@ -390,21 +398,25 @@ def generate_sourcing_blog_content(max_words=600):
             'temperature': 0.8
         }
 
-        response = requests.post(
-            'https://api.openai.com/v1/chat/completions',
-            headers=headers,
-            json=data,
-            timeout=90
-        )
-
-        if response.status_code == 200:
-            result = response.json()
-            content = result['choices'][0]['message']['content']
-            print(f"Generated weekly blog post: {len(content.split())} words")
-            return content
-        else:
-            print(f"OpenAI API error: {response.status_code} - {response.text}")
-            return None
+        for attempt, try_model in enumerate(models_to_try):
+            data['model'] = try_model
+            print(f"Trying model: {try_model}")
+            response = requests.post(
+                'https://api.openai.com/v1/chat/completions',
+                headers=headers,
+                json=data,
+                timeout=90
+            )
+            if response.status_code == 200:
+                result = response.json()
+                content = result['choices'][0]['message']['content']
+                print(f"Generated weekly blog post with {try_model}: {len(content.split())} words")
+                return content
+            if attempt < len(models_to_try) - 1:
+                print(f"Model {try_model} failed ({response.status_code}), trying fallback...")
+            else:
+                print(f"OpenAI API error: {response.status_code} - {response.text}")
+        return None
 
     except Exception as e:
         print(f"AI generation error: {str(e)}")
